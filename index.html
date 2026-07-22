@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: #e8ecf1;
+            background: linear-gradient(135deg, #003c7a 0%, #4a148c 35%, #c62828 65%, #f57c00 100%);
             position: relative;
             overflow-x: hidden;
         }
@@ -29,53 +29,62 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            opacity: 0.08;
+            opacity: 0.12;
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-            gap: 20px;
-            padding: 40px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 30px;
+            padding: 50px;
+            align-items: center;
+            justify-items: center;
         }
 
         .bg-logos .logo-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 22px;
             font-weight: 800;
-            color: #1a2a3a;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.3);
+            color: #ffffff;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
             backdrop-filter: blur(2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.06);
+            white-space: nowrap;
+            letter-spacing: 1px;
             transition: transform 0.3s;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-
-        .bg-logos .logo-item.ozon-bg { color: #005b9e; }
-        .bg-logos .logo-item.wb-bg { color: #7b2fbe; }
-        .bg-logos .logo-item.yandex-bg { color: #fc3f1d; }
-        .bg-logos .logo-item.carnelia-bg { color: #e67e22; }
 
         /* Контейнер поверх фона */
         .container {
             max-width: 640px;
             width: 100%;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.93);
+            backdrop-filter: blur(16px);
             padding: 40px 35px;
             border-radius: 32px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
             position: relative;
             z-index: 1;
         }
 
-        h1 { font-size: 30px; color: #1a2a3a; margin-bottom: 5px; }
-        .subtitle { font-size: 16px; color: #7a8a9a; margin-bottom: 25px; }
+        h1 {
+            font-size: 30px;
+            color: #1a2a3a;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #003c7a, #4a148c, #c62828, #f57c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle { font-size: 16px; color: #5a6a7a; margin-bottom: 25px; }
 
         .btn-archive {
-            background: #6c757d;
+            background: rgba(108,117,125,0.9);
             color: #fff;
             border: none;
             padding: 10px 24px;
@@ -85,6 +94,7 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 25px;
+            backdrop-filter: blur(4px);
         }
         .btn-archive:hover { background: #495057; transform: translateY(-2px); }
 
@@ -92,22 +102,23 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            background: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.88);
             backdrop-filter: blur(4px);
             border-radius: 18px;
             padding: 18px 24px;
             margin-bottom: 14px;
             text-decoration: none;
             color: #1a2a3a;
-            border: 2px solid rgba(233,237,242,0.8);
+            border: 2px solid rgba(233,237,242,0.6);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-align: left;
         }
         .card:hover {
             transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
             border-color: #005b9e;
+            background: rgba(255,255,255,0.96);
         }
 
         .card .logo {
@@ -117,15 +128,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 16px;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
+            padding: 0 4px;
         }
-        .card .logo.ozon { background: linear-gradient(135deg, #005b9e, #0077cc); }
-        .card .logo.wb { background: linear-gradient(135deg, #6a1b9a, #9c27b0); }
-        .card .logo.yandex { background: linear-gradient(135deg, #d6300f, #fc3f1d); }
-        .card .logo.carnelia { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .card .logo.ozon { background: linear-gradient(135deg, #005b9e, #0077cc); font-size: 14px; }
+        .card .logo.wb { background: linear-gradient(135deg, #6a1b9a, #9c27b0); font-size: 14px; }
+        .card .logo.yandex { background: linear-gradient(135deg, #d6300f, #fc3f1d); font-size: 18px; }
+        .card .logo.carnelia { background: linear-gradient(135deg, #d35400, #e67e22); font-size: 18px; }
 
         .card .info h3 { font-size: 18px; margin-bottom: 3px; }
         .card .info p { font-size: 14px; color: #7a8a9a; margin: 0; }
@@ -198,12 +210,14 @@
         .archive-item .date { font-size: 12px; color: #7a8a9a; }
         .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
 
+        @media (max-width: 600px) {
+            .bg-logos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+            .bg-logos .logo-item { font-size: 14px; padding: 6px 12px; }
+        }
         @media (max-width: 500px) {
             .container { padding: 25px 18px; }
             .card { padding: 14px 16px; }
-            .card .logo { width: 40px; height: 40px; font-size: 22px; }
-            .bg-logos { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(6, 1fr); gap: 10px; padding: 20px; }
-            .bg-logos .logo-item { font-size: 32px; }
+            .card .logo { width: 40px; height: 40px; font-size: 12px; }
         }
     </style>
 </head>
@@ -211,47 +225,30 @@
 
 <!-- === ФОН С ЛОГОТИПАМИ === -->
 <div class="bg-logos">
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item">OZON</div>
+    <div class="logo-item">WB</div>
+    <div class="logo-item">Яндекс Маркет</div>
+    <div class="logo-item">Карнелия</div>
 
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item">OZON</div>
+    <div class="logo-item">WB</div>
+    <div class="logo-item">Яндекс Маркет</div>
+    <div class="logo-item">Карнелия</div>
 
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item">OZON</div>
+    <div class="logo-item">WB</div>
+    <div class="logo-item">Яндекс Маркет</div>
+    <div class="logo-item">Карнелия</div>
 
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item">OZON</div>
+    <div class="logo-item">WB</div>
+    <div class="logo-item">Яндекс Маркет</div>
+    <div class="logo-item">Карнелия</div>
 
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
-    <div class="logo-item ozon-bg">O</div>
-    <div class="logo-item wb-bg">WB</div>
-    <div class="logo-item yandex-bg">Я</div>
-    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item">OZON</div>
+    <div class="logo-item">WB</div>
+    <div class="logo-item">Яндекс Маркет</div>
+    <div class="logo-item">Карнелия</div>
 </div>
 
 <!-- === ОСНОВНОЙ КОНТЕЙНЕР === -->
@@ -262,7 +259,7 @@
     <button class="btn-archive" id="archiveBtn">📂 Архив результатов</button>
 
     <a href="test-ozon.html" class="card ozon">
-        <div class="logo ozon">O</div>
+        <div class="logo ozon">OZON</div>
         <div class="info">
             <h3>Тест OZON</h3>
             <p>20 вопросов · Проходной балл 85%</p>
