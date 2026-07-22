@@ -4,32 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест Яндекс Маркет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e8ecf1 0%, #d5dce6 100%); min-height: 100vh; padding: 20px; }
+        body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #e8ecf1 0%, #d5dce6 100%); min-height: 100vh; padding: 20px; }
         .container { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 30px 35px; border-radius: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.3); position: relative; }
-        .btn-home { position: absolute; top: 20px; right: 25px; background: #6c757d; color: #fff; border: none; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+        .btn-home { position: absolute; top: 20px; right: 25px; background: #6c757d; color: #fff; border: none; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s; text-decoration: none; font-family: 'Montserrat', sans-serif; }
         .btn-home:hover { background: #495057; transform: translateY(-2px); }
         .header { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
         .header .logo { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #d6300f, #fc3f1d); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; flex-shrink: 0; }
-        .header h1 { font-size: 26px; color: #fc3f1d; margin: 0; }
-        .subtitle { text-align: center; font-size: 14px; color: #7a8a9a; margin-bottom: 5px; }
-        .pass-info { text-align: center; font-size: 15px; color: #1a2a3a; background: #fdeeea; padding: 10px; border-radius: 12px; margin-bottom: 20px; }
+        .header h1 { font-size: 26px; color: #fc3f1d; margin: 0; font-weight: 800; }
+        .subtitle { text-align: center; font-size: 14px; color: #7a8a9a; margin-bottom: 5px; font-weight: 400; }
+        .pass-info { text-align: center; font-size: 15px; color: #1a2a3a; background: #fdeeea; padding: 10px; border-radius: 12px; margin-bottom: 20px; font-weight: 600; }
         .progress-container { background: #e9edf2; border-radius: 20px; height: 10px; margin-bottom: 20px; overflow: hidden; }
         .progress-bar { height: 100%; background: linear-gradient(90deg, #fc3f1d, #ff7a5a); border-radius: 20px; width: 0%; transition: width 0.5s ease; }
-        .progress-text { text-align: right; font-size: 13px; color: #7a8a9a; margin-top: -15px; margin-bottom: 15px; }
+        .progress-text { text-align: right; font-size: 13px; color: #7a8a9a; margin-top: -15px; margin-bottom: 15px; font-weight: 600; }
         .user-form { background: #f8f9fc; padding: 18px 20px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border: 1px solid #e9edf2; }
-        .user-form label { font-weight: 600; font-size: 14px; color: #1a2a3a; min-width: 40px; }
-        .user-form input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; transition: 0.3s; }
+        .user-form label { font-weight: 700; font-size: 14px; color: #1a2a3a; min-width: 40px; }
+        .user-form input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
         .user-form input:focus { outline: none; border-color: #fc3f1d; box-shadow: 0 0 0 3px rgba(252,63,29,0.15); }
-        .btn-archive { background: #6c757d; color: #fff; border: none; padding: 8px 18px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s; margin-bottom: 15px; }
+        .btn-archive { background: #6c757d; color: #fff; border: none; padding: 8px 18px; font-size: 14px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.3s; margin-bottom: 15px; font-family: 'Montserrat', sans-serif; }
         .btn-archive:hover { background: #495057; transform: translateY(-2px); }
         .question { background: #f9fbfd; padding: 18px 22px; margin-bottom: 14px; border-radius: 16px; border-left: 5px solid #fc3f1d; transition: all 0.3s; animation: fadeIn 0.3s ease; }
         .question.correct { border-left-color: #28a745; background: #eafaf1; }
         .question.wrong { border-left-color: #dc3545; background: #fdedec; }
         .question-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: #1a2a3a; }
         .question .q-number { color: #7a8a9a; font-weight: 400; font-size: 13px; }
-        .options label { display: block; padding: 6px 0 6px 30px; font-size: 14px; cursor: pointer; border-radius: 8px; transition: all 0.15s; position: relative; }
+        .options label { display: block; padding: 6px 0 6px 30px; font-size: 14px; cursor: pointer; border-radius: 8px; transition: all 0.15s; position: relative; font-weight: 400; }
         .options label:hover { background: #fdeeea; }
         .options input[type="radio"] { margin-right: 12px; transform: scale(1.1); position: absolute; left: 0; top: 7px; }
         .options input[type="radio"]:disabled { cursor: not-allowed; }
@@ -39,37 +40,23 @@
         .feedback.correct { color: #28a745; }
         .feedback.wrong { color: #dc3545; }
         .result-block { margin-top: 25px; padding: 25px; background: #fdeeea; border-radius: 20px; text-align: center; display: none; }
-        .result-block .score { font-size: 34px; font-weight: 700; color: #fc3f1d; }
-        .result-block .detail { font-size: 16px; margin-top: 5px; }
+        .result-block .score { font-size: 34px; font-weight: 900; color: #fc3f1d; }
+        .result-block .detail { font-size: 16px; margin-top: 5px; font-weight: 600; }
         .result-block .pass-status { font-size: 22px; font-weight: 700; margin-top: 8px; padding: 10px; border-radius: 12px; }
         .result-block .pass-status.pass { color: #28a745; background: #d4edda; }
         .result-block .pass-status.fail { color: #dc3545; background: #f8d7da; }
-        .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 14px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #fc3f1d; }
+        .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 14px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #fc3f1d; font-weight: 500; }
         .result-block .screenshot-note { margin-top: 14px; padding: 14px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; font-size: 16px; font-weight: 700; color: #856404; }
         .result-block .screenshot-note span { font-size: 28px; }
-        .btn { background: linear-gradient(135deg, #fc3f1d, #ff6b4a); color: #fff; border: none; padding: 14px 25px; font-size: 17px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s; margin-top: 10px; width: 100%; }
+        .btn { background: linear-gradient(135deg, #fc3f1d, #ff6b4a); color: #fff; border: none; padding: 14px 25px; font-size: 17px; font-weight: 700; border-radius: 40px; cursor: pointer; transition: all 0.3s; margin-top: 10px; width: 100%; font-family: 'Montserrat', sans-serif; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(252,63,29,0.3); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn-reset { background: #6c757d; margin-top: 8px; }
         .btn-reset:hover { background: #495057; box-shadow: 0 8px 25px rgba(108,117,125,0.3); }
-        .footer { text-align: center; margin-top: 18px; font-size: 12px; color: #7a8a9a; }
-        .error-msg { color: #dc3545; font-size: 13px; margin-top: 5px; display: none; text-align: center; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px 35px; border-radius: 24px; max-width: 700px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .modal-content h2 { text-align: center; color: #1a2a3a; margin-bottom: 20px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
-        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; transition: 0.2s; }
-        .modal-content .close:hover { color: #1a2a3a; }
-        .archive-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f0f2f5; }
-        .archive-item:last-child { border-bottom: none; }
-        .archive-item .name { font-weight: 600; font-size: 15px; }
-        .archive-item .result { font-size: 15px; }
-        .archive-item .badge { padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
-        .archive-item .badge.pass { background: #d4edda; color: #28a745; }
-        .archive-item .badge.fail { background: #f8d7da; color: #dc3545; }
-        .archive-item .date { font-size: 12px; color: #7a8a9a; }
-        .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
+        .footer { text-align: center; margin-top: 18px; font-size: 12px; color: #7a8a9a; font-weight: 400; }
+        .error-msg { color: #dc3545; font-size: 13px; margin-top: 5px; display: none; text-align: center; font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 600px) { .container { padding: 15px; } .user-form { flex-direction: column; } .user-form input { width: 100%; } .modal-content { padding: 20px; } .btn-home { position: static; display: inline-block; margin-bottom: 15px; } .header { flex-direction: column; } }
+        @media (max-width: 600px) { .container { padding: 15px; } .user-form { flex-direction: column; } .user-form input { width: 100%; } .btn-home { position: static; display: inline-block; margin-bottom: 15px; } .header { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -110,34 +97,48 @@
     <div class="footer">При ошибке правильный вариант не показывается</div>
 </div>
 
-<div class="modal" id="archiveModal">
-    <div class="modal-content">
-        <span class="close" id="closeArchive">&times;</span>
-        <h2>📂 Архив результатов</h2>
-        <div id="archiveList"></div>
-    </div>
-</div>
-
 <script>
 (function() {
+    // ===== НАСТРОЙКА ОТПРАВКИ В GOOGLE SHEETS =====
+    const GOOGLE_SHEETS_URL = 'ВАШ_URL_GOOGLE_SHEETS'; // ЗАМЕНИТЕ НА СВОЙ!
+
+    function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
+        const data = {
+            fio: fio,
+            test: testName,
+            result: correct + ' из ' + total,
+            percent: pct,
+            status: status
+        };
+
+        fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(err => console.log('Ошибка отправки:', err));
+    }
+
+    // ===== ВОПРОСЫ =====
     const rawQuestions = [
-        {q:'1. Какие действия необходимо выполнить при приёме возврата от клиента?', opts:['А) Вернуть деньги сразу из кассы','Б) Принять товар, оформить возврат по регламенту и передать курьеру','В) Отправить клиента в службу поддержки','Г) Утилизировать товар'], ans:1},
-        {q:'2. Что необходимо сделать после окончания рабочей смены?', opts:['А) Просто уйти, закрыв дверь','Б) Сфотографировать рабочее место, убраться на пункте, проверить остатки товаров, отправить все отгрузки','В) Отправить отчёт по электронной почте','Г) Выключить все компьютеры'], ans:1},
-        {q:'3. Что из перечисленного является грубым нарушением и может привести к штрафам?', opts:['А) Вежливое общение с клиентом','Б) Нарушение сроков приёма и выдачи заказов','В) Проведение инвентаризации','Г) Соблюдение чистоты на рабочем месте'], ans:1},
-        {q:'4. В чём заключается подготовка и передача возвратов курьеру?', opts:['А) Просто отдать коробки','Б) Выбросить товары','В) Упаковать товары, оформить документы, зафиксировать отгрузку в системе и физически поместить их в тару','Г) Оставить на столе'], ans:2},
-        {q:'5. Если курьер отказывается забирать дропы и возвраты, что делать?', opts:['А) Ничего — заберёт на следующий день','Б) Сообщить в службу поддержки Яндекс Маркета через чат','В) Позвонить на горячую линию','Г) Положить товары в ячейку'], ans:1},
-        {q:'6. Каков алгоритм приёмки заказов от клиентов через Авито?', opts:['А) Отсканировать штрихкод в разделе «Приёмка», сверить паспортные данные клиента, проверить категорию товара, распечатать и наклеить этикетку, упаковать товар, подписать ручной АПП','Б) Принять в системе, ничего не клеить','В) Просто принять товар и добавить в тару','Г) Принять в разделе «Приёмка» и подписать вручную в приложении'], ans:0},
-        {q:'7. Каков алгоритм приёмки товаров от продавцов и селлеров?', opts:['А) Отсканировать в разделе «Выдача заказов» и добавить в тару','Б) Отсканировать в разделе «Выдача заказов»','В) Отсканировать штрихкоды товаров в разделе «Приёмка», нажать «Завершить», создать тару и отсканировать товары в неё','Г) Сразу добавить в тару'], ans:2},
-        {q:'8. Что делать менеджеру ПВЗ, если клиент принёс товар на возврат, но заявка в системе ещё не оформлена?', opts:['А) Принять товар и оформить возврат самостоятельно','Б) Отказать в приёме и предложить клиенту сначала оформить заявку в приложении','В) Принять товар и позвонить в поддержку','Г) Забрать товар и выдать деньги из кассы'], ans:1},
-        {q:'9. Если возврат пролежал в ПВЗ более 5 календарных дней и его не забрали, что делает Яндекс?', opts:['А) Уничтожает товар','Б) Перемещает заказ на ближайший сортировочный центр','В) Возвращает деньги покупателю без товара','Г) Отправляет товар обратно продавцу за свой счёт'], ans:1},
-        {q:'10. Что такое «отложенный заказ»?', opts:['А) Заказ, который не был оплачен','Б) Заказ, который оплачен','В) Заказ, который был отменён','Г) Заказ, который клиент хочет получить позже'], ans:3},
-        {q:'11. Какую информацию нужно проверить перед выдачей заказа?', opts:['А) Наличие товара на складе','Б) Статус заказа в системе','В) Данные клиента и номер ячейки хранения','Г) Все перечисленное'], ans:2},
-        {q:'12. Какое действие необходимо выполнить при отмене заказа клиентом?', opts:['А) Удалить заказ из системы','Б) Зафиксировать отмену в программе и уведомить клиента','В) Игнорировать отмену','Г) Попросить клиента подождать'], ans:1},
-        {q:'13. Какой документ должен предъявить клиент при получении заказа?', opts:['А) Чек','Б) Паспорт','В) Уведомление о доставке (номер заказа)','Г) Ничего не нужно'], ans:2},
-        {q:'14. Что делать, если клиент пришёл за заказом, но не может его найти?', opts:['А) Отправить клиента домой','Б) Проверить статус заказа в системе и уточнить информацию','В) Обвинить клиента в ошибке','Г) Игнорировать ситуацию'], ans:1},
-        {q:'15. В течение какого времени необходимо принять поставку?', opts:['А) В течение 24 часов','Б) В течение 15 минут','В) До конца рабочей смены','Г) В течение 2 часов'], ans:3}
+        {q:'Какие действия необходимо выполнить при приёме возврата от клиента?', opts:['А) Вернуть деньги сразу из кассы','Б) Принять товар, оформить возврат по регламенту и передать курьеру','В) Отправить клиента в службу поддержки','Г) Утилизировать товар'], ans:1},
+        {q:'Что необходимо сделать после окончания рабочей смены?', opts:['А) Просто уйти, закрыв дверь','Б) Сфотографировать рабочее место, убраться на пункте, проверить остатки товаров, отправить все отгрузки','В) Отправить отчёт по электронной почте','Г) Выключить все компьютеры'], ans:1},
+        {q:'Что из перечисленного является грубым нарушением и может привести к штрафам?', opts:['А) Вежливое общение с клиентом','Б) Нарушение сроков приёма и выдачи заказов','В) Проведение инвентаризации','Г) Соблюдение чистоты на рабочем месте'], ans:1},
+        {q:'В чём заключается подготовка и передача возвратов курьеру?', opts:['А) Просто отдать коробки','Б) Выбросить товары','В) Упаковать товары, оформить документы, зафиксировать отгрузку в системе и физически поместить их в тару','Г) Оставить на столе'], ans:2},
+        {q:'Если курьер отказывается забирать дропы и возвраты, что делать?', opts:['А) Ничего — заберёт на следующий день','Б) Сообщить в службу поддержки Яндекс Маркета через чат','В) Позвонить на горячую линию','Г) Положить товары в ячейку'], ans:1},
+        {q:'Каков алгоритм приёмки заказов от клиентов через Авито?', opts:['А) Отсканировать штрихкод в разделе «Приёмка», сверить паспортные данные клиента, проверить категорию товара, распечатать и наклеить этикетку, упаковать товар, подписать ручной АПП','Б) Принять в системе, ничего не клеить','В) Просто принять товар и добавить в тару','Г) Принять в разделе «Приёмка» и подписать вручную в приложении'], ans:0},
+        {q:'Каков алгоритм приёмки товаров от продавцов и селлеров?', opts:['А) Отсканировать в разделе «Выдача заказов» и добавить в тару','Б) Отсканировать в разделе «Выдача заказов»','В) Отсканировать штрихкоды товаров в разделе «Приёмка», нажать «Завершить», создать тару и отсканировать товары в неё','Г) Сразу добавить в тару'], ans:2},
+        {q:'Что делать менеджеру ПВЗ, если клиент принёс товар на возврат, но заявка в системе ещё не оформлена?', opts:['А) Принять товар и оформить возврат самостоятельно','Б) Отказать в приёме и предложить клиенту сначала оформить заявку в приложении','В) Принять товар и позвонить в поддержку','Г) Забрать товар и выдать деньги из кассы'], ans:1},
+        {q:'Если возврат пролежал в ПВЗ более 5 календарных дней и его не забрали, что делает Яндекс?', opts:['А) Уничтожает товар','Б) Перемещает заказ на ближайший сортировочный центр','В) Возвращает деньги покупателю без товара','Г) Отправляет товар обратно продавцу за свой счёт'], ans:1},
+        {q:'Что такое «отложенный заказ»?', opts:['А) Заказ, который не был оплачен','Б) Заказ, который оплачен','В) Заказ, который был отменён','Г) Заказ, который клиент хочет получить позже'], ans:3},
+        {q:'Какую информацию нужно проверить перед выдачей заказа?', opts:['А) Наличие товара на складе','Б) Статус заказа в системе','В) Данные клиента и номер ячейки хранения','Г) Все перечисленное'], ans:2},
+        {q:'Какое действие необходимо выполнить при отмене заказа клиентом?', opts:['А) Удалить заказ из системы','Б) Зафиксировать отмену в программе и уведомить клиента','В) Игнорировать отмену','Г) Попросить клиента подождать'], ans:1},
+        {q:'Какой документ должен предъявить клиент при получении заказа?', opts:['А) Чек','Б) Паспорт','В) Уведомление о доставке (номер заказа)','Г) Ничего не нужно'], ans:2},
+        {q:'Что делать, если клиент пришёл за заказом, но не может его найти?', opts:['А) Отправить клиента домой','Б) Проверить статус заказа в системе и уточнить информацию','В) Обвинить клиента в ошибке','Г) Игнорировать ситуацию'], ans:1},
+        {q:'В течение какого времени необходимо принять поставку?', opts:['А) В течение 24 часов','Б) В течение 15 минут','В) До конца рабочей смены','Г) В течение 2 часов'], ans:3}
     ];
 
+    // ===== ПЕРЕМЕШИВАНИЕ =====
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -158,6 +159,7 @@
     const passThreshold = 13;
     const STORAGE_KEY = 'yandex_test_results';
 
+    // ===== МОТИВАЦИЯ =====
     const motivation = {};
     for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
     for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
@@ -172,6 +174,7 @@
         return motivation[key] || (p < 85 ? '📖 Рекомендуем повторить регламенты. Повторите материал.' : '🔥 Отличный результат! Так держать!');
     }
 
+    // ===== LOCALSTORAGE =====
     function getResults() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
     }
@@ -180,49 +183,29 @@
         const results = getResults();
         results[fio] = { fio, correct, total, pct, status, date: new Date().toLocaleString('ru-RU') };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
+
+        // === ОТПРАВКА В GOOGLE SHEETS ===
+        sendToGoogleSheets(fio, 'Яндекс Маркет', correct, total, pct, status);
     }
 
-    function renderArchive() {
-        const results = getResults();
-        const list = document.getElementById('archiveList');
-        const names = Object.keys(results);
-        if (names.length === 0) {
-            list.innerHTML = '<div class="archive-empty">📭 Пока нет результатов</div>';
-            return;
-        }
-        let html = '';
-        names.sort((a, b) => new Date(results[b].date||0) - new Date(results[a].date||0));
-        names.forEach(name => {
-            const r = results[name];
-            const badgeClass = r.status === 'Сдан' ? 'pass' : 'fail';
-            const badgeText = r.status === 'Сдан' ? '✅ Сдан' : '❌ Не сдан';
-            html += `<div class="archive-item">
-                <span class="name">👤 ${r.fio}</span>
-                <span class="result">${r.correct}/${r.total} (${r.pct}%)</span>
-                <span class="badge ${badgeClass}">${badgeText}</span>
-                <span class="date">${r.date || '—'}</span>
-            </div>`;
+    // ===== РЕНДЕРИНГ =====
+    const container = document.getElementById('questions');
+    let html = '';
+    questions.forEach((q, idx) => {
+        const cleanQuestion = q.q.replace(/^\d+\.\s*/, '');
+        html += `<div class="question" id="q${idx}">`;
+        html += `<div class="question-title"><span class="q-number">${idx+1}.</span> ${cleanQuestion}</div>`;
+        html += `<div class="options" id="opts${idx}">`;
+        q.opts.forEach((opt, oi) => {
+            html += `<label id="lbl${idx}_${oi}"><input type="radio" name="q${idx}" value="${oi}"> ${opt}</label>`;
         });
-        list.innerHTML = html;
-    }
-
-    // === РЕНДЕРИНГ ВОПРОСОВ (ЯНДЕКС МАРКЕТ) ===
-const container = document.getElementById('questions');
-let html = '';
-questions.forEach((q, idx) => {
-    const cleanQuestion = q.q.replace(/^\d+\.\s*/, '');
-    html += `<div class="question" id="q${idx}">`;
-    html += `<div class="question-title"><span class="q-number">${idx+1}.</span> ${cleanQuestion}</div>`;
-    html += `<div class="options" id="opts${idx}">`;
-    q.opts.forEach((opt, oi) => {
-        html += `<label id="lbl${idx}_${oi}"><input type="radio" name="q${idx}" value="${oi}"> ${opt}</label>`;
+        html += `</div>`;
+        html += `<div class="feedback" id="fb${idx}"></div>`;
+        html += `</div>`;
     });
-    html += `</div>`;
-    html += `<div class="feedback" id="fb${idx}"></div>`;
-    html += `</div>`;
-});
-container.innerHTML = html;
+    container.innerHTML = html;
 
+    // ===== ПРОГРЕСС =====
     function updateProgress() {
         const total = questions.length;
         let answered = 0;
@@ -240,6 +223,7 @@ container.innerHTML = html;
     });
     updateProgress();
 
+    // ===== ПРОВЕРКА =====
     document.getElementById('checkBtn').addEventListener('click', function() {
         const fio = document.getElementById('fio').value.trim();
         const errorEl = document.getElementById('userError');
@@ -304,19 +288,7 @@ container.innerHTML = html;
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    document.getElementById('archiveBtn').addEventListener('click', function() {
-        renderArchive();
-        document.getElementById('archiveModal').style.display = 'flex';
-    });
-    document.getElementById('closeArchive').addEventListener('click', function() {
-        document.getElementById('archiveModal').style.display = 'none';
-    });
-    window.addEventListener('click', function(e) {
-        if (e.target === document.getElementById('archiveModal')) {
-            document.getElementById('archiveModal').style.display = 'none';
-        }
-    });
-
+    // ===== СБРОС =====
     document.getElementById('resetBtn').addEventListener('click', function() {
         document.querySelectorAll('input[type="radio"]').forEach(el => {
             el.checked = false;
