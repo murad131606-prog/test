@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Wildberries</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f7; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        h1 { text-align: center; font-size: 26px; color: #7b2fbe; border-bottom: 3px solid #7b2fbe; padding-bottom: 12px; margin-bottom: 5px; }
+        .subtitle { text-align: center; font-size: 14px; color: #7a8a9a; margin-bottom: 20px; }
+        .pass-info { text-align: center; font-size: 15px; color: #1a2a3a; background: #f0e6f8; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
+        .user-form { background: #f8f9fc; padding: 18px 20px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border: 1px solid #e9edf2; }
+        .user-form label { font-weight: 600; font-size: 14px; color: #1a2a3a; min-width: 40px; }
+        .user-form input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; }
+        .user-form input:focus { outline: none; border-color: #7b2fbe; box-shadow: 0 0 0 3px rgba(123,47,190,0.15); }
+        .btn-archive { background: #6c757d; color: #fff; border: none; padding: 8px 18px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: 0.2s; margin-bottom: 15px; }
+        .btn-archive:hover { background: #495057; }
+        .question { background: #f9fbfd; padding: 16px 20px; margin-bottom: 14px; border-radius: 12px; border-left: 5px solid #7b2fbe; transition: 0.2s; }
+        .question.correct { border-left-color: #28a745; background: #eafaf1; }
+        .question.wrong { border-left-color: #dc3545; background: #fdedec; }
+        .question-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: #1a2a3a; }
+        .options label { display: block; padding: 5px 0 5px 28px; font-size: 14px; cursor: pointer; border-radius: 6px; transition: 0.15s; position: relative; }
+        .options label:hover { background: #e9edf2; }
+        .options input[type="radio"] { margin-right: 10px; transform: scale(1.1); position: absolute; left: 0; top: 5px; }
+        .options input[type="radio"]:disabled { cursor: not-allowed; }
+        .options label.correct-answer { background: #d4edda !important; }
+        .options label.wrong-answer { background: #f8d7da !important; }
+        .feedback { font-weight: 600; font-size: 13px; margin-top: 5px; }
+        .feedback.correct { color: #28a745; }
+        .feedback.wrong { color: #dc3545; }
+        .result-block { margin-top: 25px; padding: 20px; background: #f0e6f8; border-radius: 14px; text-align: center; display: none; }
+        .result-block .score { font-size: 30px; font-weight: 700; color: #7b2fbe; }
+        .result-block .detail { font-size: 16px; margin-top: 5px; }
+        .result-block .pass-status { font-size: 20px; font-weight: 700; margin-top: 8px; padding: 8px; border-radius: 10px; }
+        .result-block .pass-status.pass { color: #28a745; background: #d4edda; }
+        .result-block .pass-status.fail { color: #dc3545; background: #f8d7da; }
+        .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 12px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #7b2fbe; }
+        .result-block .screenshot-note { margin-top: 14px; padding: 14px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; font-size: 16px; font-weight: 700; color: #856404; }
+        .result-block .screenshot-note span { font-size: 28px; }
+        .btn { background: #7b2fbe; color: #fff; border: none; padding: 13px 25px; font-size: 17px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: 0.2s; margin-top: 10px; width: 100%; }
+        .btn:hover { background: #5f1f94; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-reset { background: #6c757d; margin-top: 8px; }
+        .btn-reset:hover { background: #495057; }
+        .footer { text-align: center; margin-top: 18px; font-size: 12px; color: #7a8a9a; }
+        .error-msg { color: #dc3545; font-size: 13px; margin-top: 5px; display: none; text-align: center; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        .modal-content { background: #fff; padding: 30px 35px; border-radius: 20px; max-width: 700px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal-content h2 { text-align: center; color: #1a2a3a; margin-bottom: 20px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
+        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; }
+        .modal-content .close:hover { color: #1a2a3a; }
+        .archive-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f0f2f5; }
+        .archive-item:last-child { border-bottom: none; }
+        .archive-item .name { font-weight: 600; font-size: 15px; }
+        .archive-item .result { font-size: 15px; }
+        .archive-item .badge { padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+        .archive-item .badge.pass { background: #d4edda; color: #28a745; }
+        .archive-item .badge.fail { background: #f8d7da; color: #dc3545; }
+        .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
+        @media (max-width: 600px) { .container { padding: 15px; } .user-form { flex-direction: column; } .user-form input { width: 100%; } .modal-content { padding: 20px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📋 Тест Wildberries</h1>
+    <div class="subtitle">23 вопроса (20 + 3 кейса) · Проходной балл: 85% (20 из 23)</div>
+    <div class="pass-info">✅ Для успешной сдачи необходимо набрать <strong>20 из 23</strong> (85%)</div>
+
+    <div class="user-form" id="userForm">
+        <label>ФИО</label>
+        <input type="text" id="fio" placeholder="Иванов Иван Иванович">
+    </div>
+    <div class="error-msg" id="userError">⚠️ Введите ФИО перед проверкой</div>
+
+    <button class="btn-archive" id="archiveBtn">📂 Архив результатов</button>
+
+    <div id="questions"></div>
+
+    <div class="result-block" id="resultBlock">
+        <div class="score" id="scoreDisplay">0 / 23</div>
+        <div class="detail" id="detailDisplay"></div>
+        <div class="pass-status" id="passStatus"></div>
+        <div class="motivation" id="motivationText"></div>
+        <div class="screenshot-note" id="screenshotNote">
+            <span>📸</span> Сделайте скриншот и отправьте руководителю<br>для подтверждения прохождения теста
+        </div>
+    </div>
+
+    <button class="btn" id="checkBtn">✅ Проверить ответы</button>
+    <button class="btn btn-reset" id="resetBtn">🔄 Пройти заново</button>
+    <div class="footer">При ошибке правильный вариант не показывается</div>
+</div>
+
+<div class="modal" id="archiveModal">
+    <div class="modal-content">
+        <span class="close" id="closeArchive">&times;</span>
+        <h2>📂 Архив результатов</h2>
+        <div id="archiveList"></div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const questions = [
+        {q:'1. Что необходимо сделать при выдаче заказа курьеру, если у товара обнаружен брак?', opts:['А) Отказать курьеру в выдаче заказа и отправить товар на склад','Б) Выдать заказ курьеру, предварительно показав дефект на камеру через терминал','В) Отменить выдачу и сразу оформить возврат товара','Г) Завернуть товар в дополнительную упаковку и выдать курьеру без отметки'], ans:1},
+        {q:'2. Какой алгоритм действий при приемке товаров поставщика в десктоп-приложении?', opts:['А) Перейти в раздел «Выдача», отсканировать QR-код поставщика, выдать товары','Б) Перейти в раздел «Приемка», отсканировать стикеры товаров, товарам присвоится ячейка','В) Перейти в раздел «Возврат», создать коробку и положить туда товары','Г) Отсканировать QR-код поставщика и передать товары курьеру'], ans:1},
+        {q:'3. При выдаче заказа клиенту (не курьеру), что делать, если при вскрытии упаковки до примерки обнаружен дефект?', opts:['А) Выдать товар, так как дефект не влияет на использование','Б) Снять товар с выдачи (убрать галочку), нажать кнопку «Отметить брак» и подтвердить действие','В) Выдать товар, но предложить скидку от ПВЗ','Г) Отправить клиента в службу поддержки для оформления возврата'], ans:1},
+        {q:'4. Для выдачи товаров поставщику в десктоп-приложении необходимо:', opts:['А) Отсканировать штрих-код на каждом товаре для проверки, а затем QR-код поставщика','Б) Сначала отсканировать QR-код поставщика из его ЛК, затем отсканировать товары по одному (или пропустить сканирование)','В) Только отсканировать QR-код поставщика, товары выдаются автоматически','Г) Сверить количество товаров в ячейке, не сканируя стикеры'], ans:1},
+        {q:'5. Что делать, если в процессе сборки курьерского заказа сотрудник не нашел товар?', opts:['А) Отложить сборку до прихода курьера','Б) Нажать кнопку «Не найден» в карточке товара','В) Закрыть сборку и сообщить о проблеме в техподдержку','Г) Взять аналогичный товар с полки, отсканировать его и выдать'], ans:1},
+        {q:'6. При приемке доставки WB Track от клиента, если сейф-пакет не подходит по размеру, что нужно сделать?', opts:['А) Предложить клиенту другой размер пакета из имеющихся в ПВЗ','Б) Попросить клиента переоформить доставку с нужным размером пакета','В) Упаковать доставку в любой подходящий пакет без изменения заявки','Г) Отказать в приеме доставки'], ans:1},
+        {q:'7. В каких случаях допускается использование старого упаковочного пакета вместе с новой упаковкой?', opts:['А) Всегда, если пакет визуально целый','Б) Если на пакете указаны характеристики товара, имеется «Честный знак» или баркод, либо пакет брендированный','В) Только для обувных коробок','Г) Использовать старый пакет запрещено всегда'], ans:1},
+        {q:'8. Сколько фотографий необходимо приложить при заполнении формы отметки о браке?', opts:['А) Одну','Б) Две','В) Три','Г) Четыре'], ans:3},
+        {q:'9. Можно ли поставить отметку о браке при возврате товара, если ПВЗ не подключен к подготовке товаров к отправке на склад?', opts:['А) Да, всегда','Б) Нет, только если ПВЗ подключен к подготовке товаров к отправке на склад','В) Да, но только при возврате товара курьером','Г) Да, но без добавления фото и комментария'], ans:1},
+        {q:'10. Как поступить с товаром поставщика, который оказался во вкладке «Товары к утилизации» по истечении срока хранения?', opts:['А) Отправить товар на склад вместе с возвратами клиентов','Б) Утилизировать товар, предварительно сняв всю маркировку Wildberries с упаковки','В) Вернуть товар напрямую поставщику','Г) Оставить товар на хранении до следующего приезда поставщика'], ans:1},
+        {q:'11. Что делать при обнаружении брака во время подготовки товара к отправке на склад?', opts:['А) Продолжить переупаковку товара как обычно','Б) Отменить процесс переупаковки в программе, в разделе «Возврат» во вкладке «Товары» поставить отметку о браке','В) Проигнорировать брак и отправить товар на склад','Г) Сообщить о браке клиенту и дождаться его решения'], ans:1},
+        {q:'12. Какой тип брака относится к категории «Повреждение текстиля» согласно инструкции?', opts:['А) Следы клея','Б) Дыры, разрыв шва, порез','В) Некачественная фурнитура','Г) Просрочка товара'], ans:1},
+        {q:'13. Что из перечисленного НЕ допускается при подготовке товаров к отправке на склад?', opts:['А) Замена старого читающегося стикера на новый','Б) Перечеркивание старого стикера при необходимости','В) Использование поврежденной упаковки (открытые, порванные, замотанные скотчем пакеты)','Г) Указание в системе размера сейф-пакета, соответствующего фактическому'], ans:2},
+        {q:'14. Что делать, если срок хранения доставки WB Track истек, заказчик её не забрал, а клиент не оформил возврат?', opts:['А) Отправить доставку на склад для дальнейшего хранения','Б) Утилизировать доставку','В) Оставить доставку в ПВЗ до выяснения обстоятельств','Г) Вернуть доставку отправителю за его счет'], ans:1},
+        {q:'15. В какой момент клиент должен создать и оплатить заявку на обратную доставку WB Track?', opts:['А) После истечения срока хранения доставки','Б) До истечения срока хранения доставки','В) В день получения доставки получателем','Г) Только после обращения получателя в поддержку'], ans:1},
+        {q:'16. Если у клиента несколько доставок WB Track, как правильно принять их в ПВЗ?', opts:['А) Принимать каждую доставку по отдельности через раздел «Новый клиент»','Б) Отсканировать QR-код клиента, выбрать нужную заявку из списка, нажать «Оформить эту посылку»','В) Только через мобильное приложение WB ПВЗ','Г) Отправить клиента в другой ПВЗ, так как прием нескольких доставок запрещен'], ans:1},
+        {q:'17. Как группируются товары поставщика перед выдачей в десктоп-приложении?', opts:['А) Группируются по одинаковым характеристикам с указанием количества в карточке','Б) Выдаются по одному без группировки','В) Группируются только по размеру упаковки','Г) Не группируются, каждый товар отображается отдельно'], ans:0},
+        {q:'18. При отказе поставщика от части товаров при выдаче что нужно сделать в программе?', opts:['А) Отказать поставщику в выдаче всех товаров полностью','Б) Повторно отсканировать стикер товара или снять галочку вручную','В) Вернуть все товары поставщика на склад','Г) Сообщить о ситуации в техподдержку и дождаться указаний'], ans:1},
+        {q:'19. Как правильно наклеить ШК на сейф-пакет при оформлении доставки WB Track?', opts:['А) Наклеить ШК на дно пакета','Б) Наклеить ШК в специально отведенное место на сейф-пакете согласно инструкции','В) Наклеить ШК поверх старого стикера, если он есть','Г) Оставить сейф-пакет без ШК, указав номер вручную'], ans:1},
+        {q:'20. Какие товары запрещены к приему в доставку через сервис WB Track?', opts:['А) Крупногабаритные товары более 5 кг','Б) Хрупкие товары в ненадлежащей упаковке, оружие, алкоголь, деньги, скоропортящиеся продукты, животные, драгоценности','В) Только товары с истекшим сроком годности','Г) Товары, стоимость которых превышает 100 000 рублей'], ans:1},
+        {q:'21. Кейс 1. Клиент принес в ПВЗ ресейл-товар для отправки. Он отказывается показать содержимое на камеру. На упаковке следы вскрытия. Ваши действия?', opts:['А) Принять товар без проверки','Б) Отказать в приеме, объяснив, что содержимое обязательно должно быть показано на камеру','В) Принять товар, но сделать фото упаковки на свой телефон','Г) Упаковать товар в дополнительный пакет и принять'], ans:1},
+        {q:'22. Кейс 2. При приемке возвращенных товаров от курьера вы обнаружили, что на товаре отсутствует читаемый штрих-код. В списке сканирования этот товар числится. Товар выглядит бракованным. Как правильно оформить приемку?', opts:['А) Отказаться от приемки всего возврата','Б) Оформить возврат как брак, зафиксировав повреждения в системе без штрих-кода','В) Попытаться восстановить штрих-код вручную','Г) Принять товар как есть, отметив в комментариях отсутствие ШК'], ans:1},
+        {q:'23. Кейс 3. В конце рабочего дня вы обнаруживаете, что в возвратной коробке лежит сейф-пакет с двумя стикерами: штатным и посторонним. Как исправить ситуацию?', opts:['А) Оставить как есть, курьер разберется','Б) Снять посторонний стикер, оставив только штатный ШК доставки','В) Переклеить оба стикера на новое место','Г) Убрать сейф-пакет из коробки и отложить в сторону'], ans:1}
+    ];
+
+    const passThreshold = 20;
+    const STORAGE_KEY = 'wb_test_results';
+
+    const motivation = {};
+    for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
+    for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
+    for(let i=70;i<85;i++) motivation[i] = '🟢 Почти сдали! Повторите материал.';
+    motivation[85] = '🎉 ПОЗДРАВЛЯЮ! Вы сдали тест! 85% — отличный результат!';
+    motivation[90] = '🎉 90% — блестящий результат! Вы лучший!';
+    motivation[95] = '🎉 95% — вы заслуживаете оваций!';
+    motivation[100] = '🎉 ИДЕАЛЬНО! 100%! ВЫ — АБСОЛЮТНЫЙ ЭКСПЕРТ! 🏆✨';
+
+    function getMot(p) {
+        const key = Math.round(p);
+        return motivation[key] || (p < 85 ? '📖 Рекомендуем повторить регламенты. Повторите материал.' : '🔥 Отличный результат! Так держать!');
+    }
+
+    function getResults() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+    }
+
+    function saveResult(fio, correct, total, pct, status) {
+        const results = getResults();
+        results[fio] = { fio, correct, total, pct, status, date: new Date().toLocaleString('ru-RU') };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
+    }
+
+    function renderArchive() {
+        const results = getResults();
+        const list = document.getElementById('archiveList');
+        const names = Object.keys(results);
+        if (names.length === 0) {
+            list.innerHTML = '<div class="archive-empty">📭 Пока нет результатов</div>';
+            return;
+        }
+        let html = '';
+        names.sort((a, b) => new Date(results[b].date||0) - new Date(results[a].date||0));
+        names.forEach(name => {
+            const r = results[name];
+            const badgeClass = r.status === 'Сдан' ? 'pass' : 'fail';
+            const badgeText = r.status === 'Сдан' ? '✅ Сдан' : '❌ Не сдан';
+            html += `<div class="archive-item"><span class="name">👤 ${r.fio}</span><span class="result">${r.correct} / ${r.total} (${r.pct}%)</span><span class="badge ${badgeClass}">${badgeText}</span></div>`;
+        });
+        list.innerHTML = html;
+    }
+
+    const container = document.getElementById('questions');
+    let html = '';
+    questions.forEach((q, idx) => {
+        html += '<div class="question" id="q'+idx+'">';
+        html += '<div class="question-title">'+q.q+'</div>';
+        html += '<div class="options" id="opts'+idx+'">';
+        q.opts.forEach((opt, oi) => {
+            html += '<label id="lbl'+idx+'_'+oi+'"><input type="radio" name="q'+idx+'" value="'+oi+'"> '+opt+'</label>';
+        });
+        html += '</div>';
+        html += '<div class="feedback" id="fb'+idx+'"></div>';
+        html += '</div>';
+    });
+    container.innerHTML = html;
+
+    document.getElementById('checkBtn').addEventListener('click', function() {
+        const fio = document.getElementById('fio').value.trim();
+        const errorEl = document.getElementById('userError');
+        if (!fio) { errorEl.style.display = 'block'; return; }
+        errorEl.style.display = 'none';
+
+        let correct = 0;
+        const total = questions.length;
+        questions.forEach((q, idx) => {
+            const selected = document.querySelector('input[name="q'+idx+'"]:checked');
+            const qDiv = document.getElementById('q'+idx);
+            const fb = document.getElementById('fb'+idx);
+            const labels = document.querySelectorAll('#opts'+idx+' label');
+            labels.forEach(l => l.classList.remove('correct-answer','wrong-answer'));
+            qDiv.classList.remove('correct','wrong');
+            if (selected) {
+                const val = parseInt(selected.value);
+                if (val === q.ans) {
+                    correct++;
+                    qDiv.classList.add('correct');
+                    fb.className = 'feedback correct';
+                    fb.textContent = '✅ Правильно';
+                    labels[val].classList.add('correct-answer');
+                } else {
+                    qDiv.classList.add('wrong');
+                    fb.className = 'feedback wrong';
+                    fb.textContent = '❌ Неправильно';
+                    labels[val].classList.add('wrong-answer');
+                }
+            } else {
+                qDiv.classList.add('wrong');
+                fb.className = 'feedback wrong';
+                fb.textContent = '❌ Ответ не выбран';
+            }
+            document.querySelectorAll('input[name="q'+idx+'"]').forEach(el => el.disabled = true);
+        });
+
+        const rb = document.getElementById('resultBlock');
+        rb.style.display = 'block';
+        document.getElementById('scoreDisplay').textContent = correct+' / '+total;
+        const pct = Math.round((correct/total)*100);
+        document.getElementById('detailDisplay').textContent = pct+'%';
+        const ps = document.getElementById('passStatus');
+        let status = '';
+        if (pct >= 85) {
+            ps.className = 'pass-status pass';
+            ps.textContent = '✅ ТЕСТ СДАН! Вы молодец!';
+            status = 'Сдан';
+        } else {
+            const need = passThreshold - correct;
+            ps.className = 'pass-status fail';
+            ps.textContent = '❌ ТЕСТ НЕ СДАН. Не хватает '+need+' правильных ответа(ов) до 85%';
+            status = 'Не сдан';
+        }
+        const motEl = document.getElementById('motivationText');
+        motEl.textContent = getMot(pct);
+        motEl.className = pct < 85 ? 'motivation strict' : 'motivation';
+        document.getElementById('checkBtn').disabled = true;
+
+        saveResult(fio, correct, total, pct, status);
+
+        rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.getElementById('archiveBtn').addEventListener('click', function() {
+        renderArchive();
+        document.getElementById('archiveModal').style.display = 'flex';
+    });
+    document.getElementById('closeArchive').addEventListener('click', function() {
+        document.getElementById('archiveModal').style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if (e.target === document.getElementById('archiveModal')) {
+            document.getElementById('archiveModal').style.display = 'none';
+        }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        document.querySelectorAll('input[type="radio"]').forEach(el => {
+            el.checked = false;
+            el.disabled = false;
+        });
+        document.querySelectorAll('.question').forEach(el => el.classList.remove('correct','wrong'));
+        document.querySelectorAll('.feedback').forEach(el => { el.textContent = ''; el.className = 'feedback'; });
+        document.querySelectorAll('.options label').forEach(el => el.classList.remove('correct-answer','wrong-answer'));
+        document.getElementById('resultBlock').style.display = 'none';
+        document.getElementById('checkBtn').disabled = false;
+        document.getElementById('userError').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+</script>
+</body>
+</html>
