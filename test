@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты для ПВЗ</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f7; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; width: 100%; background: #fff; padding: 40px 35px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.12); text-align: center; }
+        h1 { font-size: 28px; color: #1a2a3a; margin-bottom: 8px; }
+        .subtitle { font-size: 16px; color: #7a8a9a; margin-bottom: 30px; }
+        .card { display: block; background: #f8f9fc; border-radius: 16px; padding: 20px 24px; margin-bottom: 14px; text-decoration: none; color: #1a2a3a; border: 2px solid #e9edf2; transition: 0.3s; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 16px; }
+        .card:hover { border-color: #005b9e; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        .card .icon { font-size: 32px; }
+        .card .info h3 { font-size: 18px; margin-bottom: 4px; }
+        .card .info p { font-size: 14px; color: #7a8a9a; margin: 0; }
+        .card.ozon { border-left: 5px solid #005b9e; }
+        .card.wb { border-left: 5px solid #7b2fbe; }
+        .card.yandex { border-left: 5px solid #fc3f1d; }
+        .card.carnelia { border-left: 5px solid #e67e22; }
+        .footer { margin-top: 25px; font-size: 13px; color: #7a8a9a; }
+        @media (max-width: 500px) { .container { padding: 25px 18px; } .card { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📋 Тесты для ПВЗ</h1>
+    <p class="subtitle">Выберите тест для прохождения</p>
+
+    <a href="test-ozon.html" class="card ozon">
+        <span class="icon">📘</span>
+        <div class="info">
+            <h3>Тест OZON</h3>
+            <p>20 вопросов · Проходной балл 85%</p>
+        </div>
+    </a>
+
+    <a href="test-wb.html" class="card wb">
+        <span class="icon">📗</span>
+        <div class="info">
+            <h3>Тест Wildberries</h3>
+            <p>23 вопроса · Проходной балл 85%</p>
+        </div>
+    </a>
+
+    <a href="test-yandex.html" class="card yandex">
+        <span class="icon">📕</span>
+        <div class="info">
+            <h3>Тест Яндекс Маркет</h3>
+            <p>15 вопросов · Проходной балл 85%</p>
+        </div>
+    </a>
+
+    <a href="test-carnelia.html" class="card carnelia">
+        <span class="icon">📙</span>
+        <div class="info">
+            <h3>Тест Карнелия</h3>
+            <p>15 вопросов · Проходной балл 85%</p>
+        </div>
+    </a>
+
+    <div class="footer">После прохождения результат отправится руководству</div>
+</div>
+</body>
+</html>
