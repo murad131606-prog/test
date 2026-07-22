@@ -6,28 +6,74 @@
     <title>Тесты для ПВЗ</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e8ecf1 0%, #d5dce6 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            background: #e8ecf1;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* === ФОН С ЛОГОТИПАМИ === */
+        .bg-logos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.08;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .bg-logos .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a2a3a;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: transform 0.3s;
+        }
+
+        .bg-logos .logo-item.ozon-bg { color: #005b9e; }
+        .bg-logos .logo-item.wb-bg { color: #7b2fbe; }
+        .bg-logos .logo-item.yandex-bg { color: #fc3f1d; }
+        .bg-logos .logo-item.carnelia-bg { color: #e67e22; }
+
+        /* Контейнер поверх фона */
         .container {
             max-width: 640px;
             width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
             padding: 40px 35px;
             border-radius: 32px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.4);
+            position: relative;
+            z-index: 1;
         }
+
         h1 { font-size: 30px; color: #1a2a3a; margin-bottom: 5px; }
         .subtitle { font-size: 16px; color: #7a8a9a; margin-bottom: 25px; }
+
         .btn-archive {
             background: #6c757d;
             color: #fff;
@@ -41,25 +87,29 @@
             margin-bottom: 25px;
         }
         .btn-archive:hover { background: #495057; transform: translateY(-2px); }
+
         .card {
             display: flex;
             align-items: center;
             gap: 18px;
-            background: #f8f9fc;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
             border-radius: 18px;
             padding: 18px 24px;
             margin-bottom: 14px;
             text-decoration: none;
             color: #1a2a3a;
-            border: 2px solid #e9edf2;
+            border: 2px solid rgba(233,237,242,0.8);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-align: left;
         }
         .card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) scale(1.01);
             box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            border-color: #005b9e;
         }
+
         .card .logo {
             width: 48px;
             height: 48px;
@@ -76,31 +126,135 @@
         .card .logo.wb { background: linear-gradient(135deg, #6a1b9a, #9c27b0); }
         .card .logo.yandex { background: linear-gradient(135deg, #d6300f, #fc3f1d); }
         .card .logo.carnelia { background: linear-gradient(135deg, #d35400, #e67e22); }
+
         .card .info h3 { font-size: 18px; margin-bottom: 3px; }
         .card .info p { font-size: 14px; color: #7a8a9a; margin: 0; }
+
         .card.ozon { border-left: 5px solid #005b9e; }
         .card.wb { border-left: 5px solid #7b2fbe; }
         .card.yandex { border-left: 5px solid #fc3f1d; }
         .card.carnelia { border-left: 5px solid #e67e22; }
+
         .footer { margin-top: 25px; font-size: 13px; color: #7a8a9a; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px 35px; border-radius: 24px; max-width: 700px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .modal-content h2 { text-align: center; color: #1a2a3a; margin-bottom: 20px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
-        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; transition: 0.2s; }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px 35px;
+            border-radius: 24px;
+            max-width: 700px;
+            width: 95%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .modal-content h2 {
+            text-align: center;
+            color: #1a2a3a;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 12px;
+        }
+        .modal-content .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: #7a8a9a;
+            transition: 0.2s;
+        }
         .modal-content .close:hover { color: #1a2a3a; }
-        .archive-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f0f2f5; }
+
+        .archive-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f2f5;
+        }
         .archive-item:last-child { border-bottom: none; }
         .archive-item .name { font-weight: 600; font-size: 15px; }
         .archive-item .result { font-size: 15px; }
-        .archive-item .badge { padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+        .archive-item .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
         .archive-item .badge.pass { background: #d4edda; color: #28a745; }
         .archive-item .badge.fail { background: #f8d7da; color: #dc3545; }
         .archive-item .date { font-size: 12px; color: #7a8a9a; }
         .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
-        @media (max-width: 500px) { .container { padding: 25px 18px; } .card { padding: 14px 16px; } .card .logo { width: 40px; height: 40px; font-size: 22px; } }
+
+        @media (max-width: 500px) {
+            .container { padding: 25px 18px; }
+            .card { padding: 14px 16px; }
+            .card .logo { width: 40px; height: 40px; font-size: 22px; }
+            .bg-logos { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(6, 1fr); gap: 10px; padding: 20px; }
+            .bg-logos .logo-item { font-size: 32px; }
+        }
     </style>
 </head>
 <body>
+
+<!-- === ФОН С ЛОГОТИПАМИ === -->
+<div class="bg-logos">
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+    <div class="logo-item ozon-bg">O</div>
+    <div class="logo-item wb-bg">WB</div>
+    <div class="logo-item yandex-bg">Я</div>
+    <div class="logo-item carnelia-bg">К</div>
+</div>
+
+<!-- === ОСНОВНОЙ КОНТЕЙНЕР === -->
 <div class="container">
     <h1>📋 Тесты для ПВЗ</h1>
     <p class="subtitle">Выберите тест для прохождения</p>
@@ -142,6 +296,7 @@
     <div class="footer">После прохождения результат сохраняется в архиве</div>
 </div>
 
+<!-- === МОДАЛЬНОЕ ОКНО АРХИВА === -->
 <div class="modal" id="archiveModal">
     <div class="modal-content">
         <span class="close" id="closeArchive">&times;</span>
@@ -182,12 +337,11 @@ function renderArchive() {
         const r = results[name];
         const badgeClass = r.status === 'Сдан' ? 'pass' : 'fail';
         const badgeText = r.status === 'Сдан' ? '✅ Сдан' : '❌ Не сдан';
-        const date = r.date || '—';
         html += `<div class="archive-item">
             <span class="name">👤 ${r.fio}</span>
             <span class="result">${r.correct}/${r.total} (${r.pct}%)</span>
             <span class="badge ${badgeClass}">${badgeText}</span>
-            <span class="date">${date}</span>
+            <span class="date">${r.date || '—'}</span>
         </div>`;
     });
     list.innerHTML = html;
