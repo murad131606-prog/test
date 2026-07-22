@@ -6,50 +6,58 @@
     <title>Тест OZON</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background: #eef2f7; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
-        h1 { text-align: center; font-size: 26px; color: #005b9e; border-bottom: 3px solid #005b9e; padding-bottom: 12px; margin-bottom: 5px; }
-        .subtitle { text-align: center; font-size: 14px; color: #7a8a9a; margin-bottom: 20px; }
-        .pass-info { text-align: center; font-size: 15px; color: #1a2a3a; background: #e9edf2; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e8ecf1 0%, #d5dce6 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 30px 35px; border-radius: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.3); position: relative; }
+        .btn-home { position: absolute; top: 20px; right: 25px; background: #6c757d; color: #fff; border: none; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+        .btn-home:hover { background: #495057; transform: translateY(-2px); }
+        .header { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
+        .header .logo { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #005b9e, #0077cc); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; flex-shrink: 0; }
+        .header h1 { font-size: 26px; color: #005b9e; margin: 0; }
+        .subtitle { text-align: center; font-size: 14px; color: #7a8a9a; margin-bottom: 5px; }
+        .pass-info { text-align: center; font-size: 15px; color: #1a2a3a; background: #e9edf2; padding: 10px; border-radius: 12px; margin-bottom: 20px; }
+        .progress-container { background: #e9edf2; border-radius: 20px; height: 10px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #005b9e, #4da6e8); border-radius: 20px; width: 0%; transition: width 0.5s ease; }
+        .progress-text { text-align: right; font-size: 13px; color: #7a8a9a; margin-top: -15px; margin-bottom: 15px; }
         .user-form { background: #f8f9fc; padding: 18px 20px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border: 1px solid #e9edf2; }
         .user-form label { font-weight: 600; font-size: 14px; color: #1a2a3a; min-width: 40px; }
-        .user-form input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; }
+        .user-form input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; transition: 0.3s; }
         .user-form input:focus { outline: none; border-color: #005b9e; box-shadow: 0 0 0 3px rgba(0,91,158,0.15); }
-        .btn-archive { background: #6c757d; color: #fff; border: none; padding: 8px 18px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: 0.2s; margin-bottom: 15px; }
-        .btn-archive:hover { background: #495057; }
-        .question { background: #f9fbfd; padding: 16px 20px; margin-bottom: 14px; border-radius: 12px; border-left: 5px solid #005b9e; transition: 0.2s; }
+        .btn-archive { background: #6c757d; color: #fff; border: none; padding: 8px 18px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s; margin-bottom: 15px; }
+        .btn-archive:hover { background: #495057; transform: translateY(-2px); }
+        .question { background: #f9fbfd; padding: 18px 22px; margin-bottom: 14px; border-radius: 16px; border-left: 5px solid #005b9e; transition: all 0.3s; animation: fadeIn 0.3s ease; }
         .question.correct { border-left-color: #28a745; background: #eafaf1; }
         .question.wrong { border-left-color: #dc3545; background: #fdedec; }
         .question-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: #1a2a3a; }
-        .options label { display: block; padding: 5px 0 5px 28px; font-size: 14px; cursor: pointer; border-radius: 6px; transition: 0.15s; position: relative; }
+        .question .q-number { color: #7a8a9a; font-weight: 400; font-size: 13px; }
+        .options label { display: block; padding: 6px 0 6px 30px; font-size: 14px; cursor: pointer; border-radius: 8px; transition: all 0.15s; position: relative; }
         .options label:hover { background: #e9edf2; }
-        .options input[type="radio"] { margin-right: 10px; transform: scale(1.1); position: absolute; left: 0; top: 5px; }
+        .options input[type="radio"] { margin-right: 12px; transform: scale(1.1); position: absolute; left: 0; top: 7px; }
         .options input[type="radio"]:disabled { cursor: not-allowed; }
-        .options label.correct-answer { background: #d4edda !important; }
-        .options label.wrong-answer { background: #f8d7da !important; }
-        .feedback { font-weight: 600; font-size: 13px; margin-top: 5px; }
+        .options label.correct-answer { background: #d4edda !important; border-radius: 8px; }
+        .options label.wrong-answer { background: #f8d7da !important; border-radius: 8px; }
+        .feedback { font-weight: 600; font-size: 13px; margin-top: 6px; }
         .feedback.correct { color: #28a745; }
         .feedback.wrong { color: #dc3545; }
-        .result-block { margin-top: 25px; padding: 20px; background: #e9f0fa; border-radius: 14px; text-align: center; display: none; }
-        .result-block .score { font-size: 30px; font-weight: 700; color: #005b9e; }
+        .result-block { margin-top: 25px; padding: 25px; background: #e9f0fa; border-radius: 20px; text-align: center; display: none; }
+        .result-block .score { font-size: 34px; font-weight: 700; color: #005b9e; }
         .result-block .detail { font-size: 16px; margin-top: 5px; }
-        .result-block .pass-status { font-size: 20px; font-weight: 700; margin-top: 8px; padding: 8px; border-radius: 10px; }
+        .result-block .pass-status { font-size: 22px; font-weight: 700; margin-top: 8px; padding: 10px; border-radius: 12px; }
         .result-block .pass-status.pass { color: #28a745; background: #d4edda; }
         .result-block .pass-status.fail { color: #dc3545; background: #f8d7da; }
-        .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 12px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #005b9e; }
+        .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 14px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #005b9e; }
         .result-block .screenshot-note { margin-top: 14px; padding: 14px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; font-size: 16px; font-weight: 700; color: #856404; }
         .result-block .screenshot-note span { font-size: 28px; }
-        .btn { background: #005b9e; color: #fff; border: none; padding: 13px 25px; font-size: 17px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: 0.2s; margin-top: 10px; width: 100%; }
-        .btn:hover { background: #00407a; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn { background: linear-gradient(135deg, #005b9e, #0077cc); color: #fff; border: none; padding: 14px 25px; font-size: 17px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s; margin-top: 10px; width: 100%; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,91,158,0.3); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn-reset { background: #6c757d; margin-top: 8px; }
-        .btn-reset:hover { background: #495057; }
+        .btn-reset:hover { background: #495057; box-shadow: 0 8px 25px rgba(108,117,125,0.3); }
         .footer { text-align: center; margin-top: 18px; font-size: 12px; color: #7a8a9a; }
         .error-msg { color: #dc3545; font-size: 13px; margin-top: 5px; display: none; text-align: center; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px 35px; border-radius: 20px; max-width: 700px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
+        .modal-content { background: #fff; padding: 30px 35px; border-radius: 24px; max-width: 700px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .modal-content h2 { text-align: center; color: #1a2a3a; margin-bottom: 20px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
-        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; }
+        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; transition: 0.2s; }
         .modal-content .close:hover { color: #1a2a3a; }
         .archive-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f0f2f5; }
         .archive-item:last-child { border-bottom: none; }
@@ -58,13 +66,19 @@
         .archive-item .badge { padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
         .archive-item .badge.pass { background: #d4edda; color: #28a745; }
         .archive-item .badge.fail { background: #f8d7da; color: #dc3545; }
+        .archive-item .date { font-size: 12px; color: #7a8a9a; }
         .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
-        @media (max-width: 600px) { .container { padding: 15px; } .user-form { flex-direction: column; } .user-form input { width: 100%; } .modal-content { padding: 20px; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 600px) { .container { padding: 15px; } .user-form { flex-direction: column; } .user-form input { width: 100%; } .modal-content { padding: 20px; } .btn-home { position: static; display: inline-block; margin-bottom: 15px; } .header { flex-direction: column; } }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📋 Тест OZON</h1>
+    <a href="index.html" class="btn-home">🏠 На главную</a>
+    <div class="header">
+        <div class="logo">O</div>
+        <h1>Тест OZON</h1>
+    </div>
     <div class="subtitle">20 вопросов · Проходной балл: 85% (17 из 20)</div>
     <div class="pass-info">✅ Для успешной сдачи необходимо набрать <strong>17 из 20</strong> (85%)</div>
 
@@ -75,6 +89,9 @@
     <div class="error-msg" id="userError">⚠️ Введите ФИО перед проверкой</div>
 
     <button class="btn-archive" id="archiveBtn">📂 Архив результатов</button>
+
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-text" id="progressText">0 из 20</div>
 
     <div id="questions"></div>
 
@@ -103,7 +120,7 @@
 
 <script>
 (function() {
-    const questions = [
+    const rawQuestions = [
         {q:'1. В течение какого времени необходимо принять перевозку и все постинги, когда приехал курьер?', opts:['А) В течение 15 минут с момента прибытия','Б) До конца текущего рабочего дня','В) В течение 2 часов','Г) До конца следующего рабочего дня'], ans:0},
         {q:'2. Какой правильный алгоритм добавления возвратов?', opts:['А) Принять и физически добавить в коробку','Б) Отсканировать один раз и добавить в коробку','В) Выбрать направление «Прямой» или «Возвратный поток», отсканировать товар, если требуется переупаковка — переупаковать и наклеить стикер, отсканировать и добавить системно и физически в коробку','Г) Отдать физически курьеру'], ans:2},
         {q:'3. Каков правильный алгоритм действий при приеме возврата от клиента?', opts:['А) Принять товар, вернуть деньги из кассы ПВЗ и оформить документы','Б) Попросить номер заявки, убедиться в одобрении, сверить товар с описанием в системе и оформить возврат','В) Отправить клиента в службу поддержки Ozon','Г) Принять товар без проверки, чтобы не создавать очередь'], ans:1},
@@ -125,6 +142,26 @@
         {q:'19. Можно ли принимать поставку на другом ПВЗ или выдавать товар (например, Wildberries)?', opts:['А) Можно только приемку','Б) Категорически нельзя ни приемку, ни выдачу заказов','В) Можно, если отсканировать штрихкод, но выдать в месте, где находится ПВЗ','Г) Можно только выдачу'], ans:1},
         {q:'20. За сколько времени нужно принять приемку?', opts:['А) В течение 2 часов','Б) В течение рабочей смены','В) В течение 24 часов','Г) Оставить на следующую смену'], ans:0}
     ];
+
+    // === ПЕРЕМЕШИВАНИЕ ===
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // Перемешиваем вопросы
+    let questions = shuffle([...rawQuestions]);
+    // Для каждого вопроса перемешиваем варианты ответов, сохраняя правильный индекс
+    questions = questions.map(q => {
+        const optsWithIndex = q.opts.map((text, idx) => ({ text, idx }));
+        const shuffledOpts = shuffle([...optsWithIndex]);
+        const newOpts = shuffledOpts.map(item => item.text);
+        const newAns = shuffledOpts.findIndex(item => item.idx === q.ans);
+        return { q: q.q, opts: newOpts, ans: newAns };
+    });
 
     const passThreshold = 17;
     const STORAGE_KEY = 'ozon_test_results';
@@ -167,26 +204,51 @@
             const r = results[name];
             const badgeClass = r.status === 'Сдан' ? 'pass' : 'fail';
             const badgeText = r.status === 'Сдан' ? '✅ Сдан' : '❌ Не сдан';
-            html += `<div class="archive-item"><span class="name">👤 ${r.fio}</span><span class="result">${r.correct} / ${r.total} (${r.pct}%)</span><span class="badge ${badgeClass}">${badgeText}</span></div>`;
+            html += `<div class="archive-item">
+                <span class="name">👤 ${r.fio}</span>
+                <span class="result">${r.correct}/${r.total} (${r.pct}%)</span>
+                <span class="badge ${badgeClass}">${badgeText}</span>
+                <span class="date">${r.date || '—'}</span>
+            </div>`;
         });
         list.innerHTML = html;
     }
 
+    // === РЕНДЕРИНГ ===
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
-        html += '<div class="question" id="q'+idx+'">';
-        html += '<div class="question-title">'+q.q+'</div>';
-        html += '<div class="options" id="opts'+idx+'">';
+        html += `<div class="question" id="q${idx}">`;
+        html += `<div class="question-title"><span class="q-number">${idx+1}.</span> ${q.q}</div>`;
+        html += `<div class="options" id="opts${idx}">`;
         q.opts.forEach((opt, oi) => {
-            html += '<label id="lbl'+idx+'_'+oi+'"><input type="radio" name="q'+idx+'" value="'+oi+'"> '+opt+'</label>';
+            html += `<label id="lbl${idx}_${oi}"><input type="radio" name="q${idx}" value="${oi}"> ${opt}</label>`;
         });
-        html += '</div>';
-        html += '<div class="feedback" id="fb'+idx+'"></div>';
-        html += '</div>';
+        html += `</div>`;
+        html += `<div class="feedback" id="fb${idx}"></div>`;
+        html += `</div>`;
     });
     container.innerHTML = html;
 
+    // === ОБНОВЛЕНИЕ ПРОГРЕССА ===
+    function updateProgress() {
+        const total = questions.length;
+        let answered = 0;
+        for (let i = 0; i < total; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected) answered++;
+        }
+        const pct = Math.round((answered / total) * 100);
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressText').textContent = answered + ' из ' + total;
+    }
+
+    document.querySelectorAll('input[type="radio"]').forEach(el => {
+        el.addEventListener('change', updateProgress);
+    });
+    updateProgress();
+
+    // === ПРОВЕРКА ===
     document.getElementById('checkBtn').addEventListener('click', function() {
         const fio = document.getElementById('fio').value.trim();
         const errorEl = document.getElementById('userError');
@@ -196,10 +258,10 @@
         let correct = 0;
         const total = questions.length;
         questions.forEach((q, idx) => {
-            const selected = document.querySelector('input[name="q'+idx+'"]:checked');
-            const qDiv = document.getElementById('q'+idx);
-            const fb = document.getElementById('fb'+idx);
-            const labels = document.querySelectorAll('#opts'+idx+' label');
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            const qDiv = document.getElementById(`q${idx}`);
+            const fb = document.getElementById(`fb${idx}`);
+            const labels = document.querySelectorAll(`#opts${idx} label`);
             labels.forEach(l => l.classList.remove('correct-answer','wrong-answer'));
             qDiv.classList.remove('correct','wrong');
             if (selected) {
@@ -221,7 +283,7 @@
                 fb.className = 'feedback wrong';
                 fb.textContent = '❌ Ответ не выбран';
             }
-            document.querySelectorAll('input[name="q'+idx+'"]').forEach(el => el.disabled = true);
+            document.querySelectorAll(`input[name="q${idx}"]`).forEach(el => el.disabled = true);
         });
 
         const rb = document.getElementById('resultBlock');
@@ -251,6 +313,7 @@
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
+    // === АРХИВ ===
     document.getElementById('archiveBtn').addEventListener('click', function() {
         renderArchive();
         document.getElementById('archiveModal').style.display = 'flex';
@@ -264,6 +327,7 @@
         }
     });
 
+    // === СБРОС ===
     document.getElementById('resetBtn').addEventListener('click', function() {
         document.querySelectorAll('input[type="radio"]').forEach(el => {
             el.checked = false;
@@ -275,6 +339,7 @@
         document.getElementById('resultBlock').style.display = 'none';
         document.getElementById('checkBtn').disabled = false;
         document.getElementById('userError').style.display = 'none';
+        updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 })();
