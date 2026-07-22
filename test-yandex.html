@@ -206,20 +206,22 @@
         list.innerHTML = html;
     }
 
-    const container = document.getElementById('questions');
-    let html = '';
-    questions.forEach((q, idx) => {
-        html += `<div class="question" id="q${idx}">`;
-        html += `<div class="question-title"><span class="q-number">${idx+1}.</span> ${q.q}</div>`;
-        html += `<div class="options" id="opts${idx}">`;
-        q.opts.forEach((opt, oi) => {
-            html += `<label id="lbl${idx}_${oi}"><input type="radio" name="q${idx}" value="${oi}"> ${opt}</label>`;
-        });
-        html += `</div>`;
-        html += `<div class="feedback" id="fb${idx}"></div>`;
-        html += `</div>`;
+    // === РЕНДЕРИНГ ВОПРОСОВ (ЯНДЕКС МАРКЕТ) ===
+const container = document.getElementById('questions');
+let html = '';
+questions.forEach((q, idx) => {
+    const cleanQuestion = q.q.replace(/^\d+\.\s*/, '');
+    html += `<div class="question" id="q${idx}">`;
+    html += `<div class="question-title"><span class="q-number">${idx+1}.</span> ${cleanQuestion}</div>`;
+    html += `<div class="options" id="opts${idx}">`;
+    q.opts.forEach((opt, oi) => {
+        html += `<label id="lbl${idx}_${oi}"><input type="radio" name="q${idx}" value="${oi}"> ${opt}</label>`;
     });
-    container.innerHTML = html;
+    html += `</div>`;
+    html += `<div class="feedback" id="fb${idx}"></div>`;
+    html += `</div>`;
+});
+container.innerHTML = html;
 
     function updateProgress() {
         const total = questions.length;
