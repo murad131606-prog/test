@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Montserrat', 'Segoe UI', sans-serif;
             min-height: 100vh;
@@ -18,6 +19,7 @@
             position: relative;
             overflow-x: hidden;
         }
+
         .bg-logos {
             position: fixed;
             top: 0;
@@ -53,6 +55,7 @@
             text-shadow: 0 2px 8px rgba(0,0,0,0.3);
             font-family: 'Montserrat', sans-serif;
         }
+
         .container {
             max-width: 640px;
             width: 100%;
@@ -66,6 +69,7 @@
             position: relative;
             z-index: 1;
         }
+
         h1 {
             font-size: 32px;
             font-weight: 900;
@@ -141,7 +145,7 @@
         .card.carnelia { border-left: 5px solid #e67e22; }
         .footer { margin-top: 25px; font-size: 13px; font-weight: 400; color: #7a8a9a; }
 
-        /* Модальное окно архива */
+        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -159,7 +163,7 @@
             background: #fff;
             padding: 30px 35px;
             border-radius: 24px;
-            max-width: 700px;
+            max-width: 800px;
             width: 95%;
             max-height: 80vh;
             overflow-y: auto;
@@ -226,36 +230,57 @@
         .password-box .btn-unlock:hover { background: #00407a; transform: translateY(-2px); }
         .password-box .error { color: #dc3545; font-size: 14px; margin-top: 8px; display: none; }
 
-        .archive-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
+        /* Архив — таблица с разделением по тестам */
+        .archive-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .archive-table th {
+            background: #f0f2f5;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-bottom: 2px solid #e9edf2;
+        }
+        .archive-table td {
+            padding: 10px 12px;
             border-bottom: 1px solid #f0f2f5;
         }
-        .archive-item:last-child { border-bottom: none; }
-        .archive-item .name { font-weight: 600; font-size: 15px; }
-        .archive-item .result { font-size: 15px; }
-        .archive-item .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
+        .archive-table tr:hover td {
+            background: #f8f9fc;
         }
-        .archive-item .badge.pass { background: #d4edda; color: #28a745; }
-        .archive-item .badge.fail { background: #f8d7da; color: #dc3545; }
-        .archive-item .date { font-size: 12px; color: #7a8a9a; }
+        .archive-table .test-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .test-badge.ozon { background: #005b9e; }
+        .test-badge.wb { background: #7b2fbe; }
+        .test-badge.yandex { background: #fc3f1d; }
+        .test-badge.carnelia { background: #e67e22; }
+
+        .badge-pass { color: #28a745; font-weight: 700; }
+        .badge-fail { color: #dc3545; font-weight: 700; }
+
         .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; }
 
         @media (max-width: 600px) {
             .bg-logos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
             .bg-logos .logo-item { font-size: 14px; padding: 6px 12px; }
+            .archive-table { font-size: 12px; }
+            .archive-table th, .archive-table td { padding: 6px 8px; }
         }
         @media (max-width: 500px) {
             .container { padding: 25px 18px; }
             .card { padding: 14px 16px; }
             .card .logo { width: 40px; height: 40px; font-size: 12px; }
             h1 { font-size: 26px; }
+            .modal-content { padding: 20px; }
         }
     </style>
 </head>
@@ -327,7 +352,7 @@
     <div class="footer">После прохождения результат сохраняется в архиве</div>
 </div>
 
-<!-- === МОДАЛЬНОЕ ОКНО АРХИВА (С ПАРОЛЕМ) === -->
+<!-- === МОДАЛЬНОЕ ОКНО АРХИВА === -->
 <div class="modal" id="archiveModal">
     <div class="modal-content">
         <span class="close" id="closeArchive">&times;</span>
@@ -343,73 +368,122 @@
         </div>
 
         <!-- Список результатов (скрыт до ввода пароля) -->
-        <div id="archiveList" style="display:none;"></div>
+        <div id="archiveContent" style="display:none;">
+            <table class="archive-table" id="archiveTable">
+                <thead>
+                    <tr>
+                        <th>👤 Сотрудник</th>
+                        <th>📋 Тест</th>
+                        <th>📊 Результат</th>
+                        <th>🏷️ Статус</th>
+                        <th>📅 Дата</th>
+                    </tr>
+                </thead>
+                <tbody id="archiveList"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
 // ===== НАСТРОЙКА ПАРОЛЯ =====
 // СМЕНИТЕ ЭТОТ ПАРОЛЬ НА СВОЙ!
-const ARCHIVE_PASSWORD = '22072026';
+const ARCHIVE_PASSWORD = 'admin123';
+
+// ===== НАЗВАНИЯ ТЕСТОВ ДЛЯ АРХИВА =====
+const TEST_NAMES = {
+    'ozon_test_results': 'OZON',
+    'wb_test_results': 'Wildberries',
+    'yandex_test_results': 'Яндекс Маркет',
+    'carnelia_test_results': 'Карнелия'
+};
+
+const TEST_COLORS = {
+    'ozon_test_results': 'ozon',
+    'wb_test_results': 'wb',
+    'yandex_test_results': 'yandex',
+    'carnelia_test_results': 'carnelia'
+};
 
 const STORAGE_KEYS = ['ozon_test_results','wb_test_results','yandex_test_results','carnelia_test_results'];
 
+// ===== СБОР ВСЕХ РЕЗУЛЬТАТОВ С РАЗДЕЛЕНИЕМ ПО ТЕСТАМ =====
 function getAllResults() {
-    const all = {};
+    const all = [];
     STORAGE_KEYS.forEach(key => {
         try {
             const data = JSON.parse(localStorage.getItem(key)) || {};
+            const testName = TEST_NAMES[key] || key;
+            const testColor = TEST_COLORS[key] || '';
+
             Object.keys(data).forEach(name => {
-                if (!all[name] || new Date(data[name].date) > new Date(all[name].date)) {
-                    all[name] = data[name];
-                }
+                const r = data[name];
+                all.push({
+                    fio: r.fio || name,
+                    test: testName,
+                    testKey: key,
+                    color: testColor,
+                    correct: r.correct || 0,
+                    total: r.total || 0,
+                    pct: r.pct || 0,
+                    status: r.status || 'Не сдан',
+                    date: r.date || '—'
+                });
             });
         } catch(e) {}
     });
     return all;
 }
 
+// ===== ОТОБРАЖЕНИЕ АРХИВА =====
 function renderArchive() {
     const results = getAllResults();
     const list = document.getElementById('archiveList');
-    const names = Object.keys(results);
-    if (names.length === 0) {
-        list.innerHTML = '<div class="archive-empty">📭 Пока нет результатов</div>';
+
+    if (results.length === 0) {
+        list.innerHTML = '<tr><td colspan="5" class="archive-empty">📭 Пока нет результатов</td></tr>';
         return;
     }
-    let html = '';
-    names.sort((a, b) => new Date(results[b].date||0) - new Date(results[a].date||0));
-    names.forEach(name => {
-        const r = results[name];
-        const badgeClass = r.status === 'Сдан' ? 'pass' : 'fail';
-        const badgeText = r.status === 'Сдан' ? '✅ Сдан' : '❌ Не сдан';
-        html += `<div class="archive-item">
-            <span class="name">👤 ${r.fio}</span>
-            <span class="result">${r.correct}/${r.total} (${r.pct}%)</span>
-            <span class="badge ${badgeClass}">${badgeText}</span>
-            <span class="date">${r.date || '—'}</span>
-        </div>`;
+
+    // Сортировка: сначала по ФИО, потом по дате (новые сверху)
+    results.sort((a, b) => {
+        if (a.fio !== b.fio) return a.fio.localeCompare(b.fio);
+        return new Date(b.date) - new Date(a.date);
     });
+
+    let html = '';
+    results.forEach(r => {
+        const statusClass = r.status === 'Сдан' ? 'badge-pass' : 'badge-fail';
+        const statusIcon = r.status === 'Сдан' ? '✅' : '❌';
+        const badgeClass = r.color || '';
+
+        html += `<tr>
+            <td><strong>${r.fio}</strong></td>
+            <td><span class="test-badge ${badgeClass}">${r.test}</span></td>
+            <td>${r.correct} / ${r.total} (${r.pct}%)</td>
+            <td class="${statusClass}">${statusIcon} ${r.status}</td>
+            <td style="font-size:12px; color:#7a8a9a;">${r.date}</td>
+        </tr>`;
+    });
+
     list.innerHTML = html;
 }
 
-// === ОТКРЫТИЕ МОДАЛЬНОГО ОКНА ===
+// ===== ОТКРЫТИЕ МОДАЛЬНОГО ОКНА =====
 document.getElementById('archiveBtn').addEventListener('click', function() {
-    // Сбрасываем состояние
     document.getElementById('passwordBox').style.display = 'block';
-    document.getElementById('archiveList').style.display = 'none';
+    document.getElementById('archiveContent').style.display = 'none';
     document.getElementById('passwordInput').value = '';
     document.getElementById('passwordError').style.display = 'none';
     document.getElementById('archiveModal').style.display = 'flex';
 });
 
-// === ПРОВЕРКА ПАРОЛЯ ===
+// ===== ПРОВЕРКА ПАРОЛЯ =====
 document.getElementById('unlockBtn').addEventListener('click', function() {
     const input = document.getElementById('passwordInput').value;
     if (input === ARCHIVE_PASSWORD) {
-        // Пароль верный — показываем архив
         document.getElementById('passwordBox').style.display = 'none';
-        document.getElementById('archiveList').style.display = 'block';
+        document.getElementById('archiveContent').style.display = 'block';
         renderArchive();
         document.getElementById('passwordError').style.display = 'none';
     } else {
@@ -417,14 +491,14 @@ document.getElementById('unlockBtn').addEventListener('click', function() {
     }
 });
 
-// === ВВОД ПАРОЛЯ ПО ENTER ===
+// ===== ВВОД ПАРОЛЯ ПО ENTER =====
 document.getElementById('passwordInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         document.getElementById('unlockBtn').click();
     }
 });
 
-// === ЗАКРЫТИЕ ОКНА ===
+// ===== ЗАКРЫТИЕ ОКНА =====
 document.getElementById('closeArchive').addEventListener('click', function() {
     document.getElementById('archiveModal').style.display = 'none';
 });
