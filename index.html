@@ -12,11 +12,7 @@
         .bg-logos .logo-item { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #ffffff; border-radius: 12px; background: rgba(255,255,255,0.08); backdrop-filter: blur(2px); padding: 8px 18px; border: 1px solid rgba(255,255,255,0.06); white-space: nowrap; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
         .container { max-width: 640px; width: 100%; background: rgba(255,255,255,0.93); backdrop-filter: blur(16px); padding: 40px 35px; border-radius: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); text-align: center; border: 1px solid rgba(255,255,255,0.3); position: relative; z-index: 1; }
         h1 { font-size: 32px; font-weight: 900; margin-bottom: 5px; background: linear-gradient(135deg, #003c7a, #4a148c, #c62828, #f57c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.5px; }
-        .subtitle { font-size: 16px; font-weight: 400; color: #5a6a7a; margin-bottom: 25px; }
-        .btn-archive { background: rgba(108,117,125,0.9); color: #fff; border: none; padding: 10px 28px; font-size: 15px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.3s; margin-bottom: 25px; font-family: 'Montserrat', sans-serif; }
-        .btn-archive:hover { background: #495057; transform: translateY(-2px); }
-        .btn-refresh { background: rgba(40,167,69,0.9); color: #fff; border: none; padding: 8px 18px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.3s; margin-left: 10px; font-family: 'Montserrat', sans-serif; }
-        .btn-refresh:hover { background: #28a745; transform: translateY(-2px); }
+        .subtitle { font-size: 16px; font-weight: 400; color: #5a6a7a; margin-bottom: 30px; }
         .card { display: flex; align-items: center; gap: 18px; background: rgba(255,255,255,0.88); backdrop-filter: blur(4px); border-radius: 18px; padding: 18px 24px; margin-bottom: 14px; text-decoration: none; color: #1a2a3a; border: 2px solid rgba(233,237,242,0.6); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; text-align: left; }
         .card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 12px 30px rgba(0,0,0,0.15); border-color: #005b9e; background: rgba(255,255,255,0.96); }
         .card .logo { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; flex-shrink: 0; padding: 0 4px; font-family: 'Montserrat', sans-serif; }
@@ -32,46 +28,15 @@
         .card.carnelia { border-left: 5px solid #e67e22; }
         .footer { margin-top: 25px; font-size: 13px; font-weight: 400; color: #7a8a9a; }
 
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px 35px; border-radius: 24px; max-width: 850px; width: 95%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); font-family: 'Montserrat', sans-serif; }
-        .modal-content h2 { text-align: center; font-weight: 700; color: #1a2a3a; margin-bottom: 20px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
-        .modal-content .close { float: right; font-size: 28px; cursor: pointer; color: #7a8a9a; transition: 0.2s; }
-        .modal-content .close:hover { color: #1a2a3a; }
-
-        .password-box { text-align: center; padding: 10px 0; }
-        .password-box label { display: block; font-weight: 600; font-size: 16px; margin-bottom: 10px; color: #1a2a3a; }
-        .password-box input { padding: 10px 16px; border: 2px solid #d1d5db; border-radius: 12px; font-size: 16px; width: 200px; text-align: center; font-family: 'Montserrat', sans-serif; transition: 0.3s; }
-        .password-box input:focus { outline: none; border-color: #005b9e; box-shadow: 0 0 0 3px rgba(0,91,158,0.15); }
-        .password-box .btn-unlock { background: #005b9e; color: #fff; border: none; padding: 10px 30px; font-size: 16px; font-weight: 700; border-radius: 30px; cursor: pointer; margin-top: 12px; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
-        .password-box .btn-unlock:hover { background: #00407a; transform: translateY(-2px); }
-        .password-box .error { color: #dc3545; font-size: 14px; margin-top: 8px; display: none; }
-
-        .archive-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        .archive-table th { background: #f0f2f5; padding: 10px 12px; text-align: left; font-weight: 700; color: #1a2a3a; border-bottom: 2px solid #e9edf2; }
-        .archive-table td { padding: 10px 12px; border-bottom: 1px solid #f0f2f5; }
-        .archive-table tr:hover td { background: #f8f9fc; }
-        .test-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; color: #fff; }
-        .test-badge.ozon { background: #005b9e; }
-        .test-badge.wb { background: #7b2fbe; }
-        .test-badge.yandex { background: #fc3f1d; }
-        .test-badge.carnelia { background: #e67e22; }
-        .badge-pass { color: #28a745; font-weight: 700; }
-        .badge-fail { color: #dc3545; font-weight: 700; }
-        .archive-empty { text-align: center; color: #7a8a9a; padding: 30px 0; font-size: 16px; font-weight: 400; }
-        .loading { text-align: center; color: #7a8a9a; padding: 20px; font-weight: 400; }
-
         @media (max-width: 600px) {
             .bg-logos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
             .bg-logos .logo-item { font-size: 14px; padding: 6px 12px; }
-            .archive-table { font-size: 12px; }
-            .archive-table th, .archive-table td { padding: 6px 8px; }
         }
         @media (max-width: 500px) {
             .container { padding: 25px 18px; }
             .card { padding: 14px 16px; }
             .card .logo { width: 40px; height: 40px; font-size: 12px; }
             h1 { font-size: 26px; }
-            .modal-content { padding: 20px; }
         }
     </style>
 </head>
@@ -102,14 +67,12 @@
 
 <div class="container">
     <h1>📋 Тесты для ПВЗ</h1>
-    <p class="subtitle">Выберите тест для прохождения</p>
-
-    <button class="btn-archive" id="archiveBtn">📂 Архив результатов</button>
+    <p class="subtitle">Выберите направление для прохождения</p>
 
     <a href="test-ozon.html" class="card ozon">
         <div class="logo ozon">OZON</div>
         <div class="info">
-            <h3>Тест OZON</h3>
+            <h3>OZON</h3>
             <p>20 вопросов · Проходной балл 85%</p>
         </div>
     </a>
@@ -117,7 +80,7 @@
     <a href="test-wb.html" class="card wb">
         <div class="logo wb">WB</div>
         <div class="info">
-            <h3>Тест Wildberries</h3>
+            <h3>Wildberries</h3>
             <p>23 вопроса · Проходной балл 85%</p>
         </div>
     </a>
@@ -125,7 +88,7 @@
     <a href="test-yandex.html" class="card yandex">
         <div class="logo yandex">Я</div>
         <div class="info">
-            <h3>Тест Яндекс Маркет</h3>
+            <h3>Яндекс Маркет</h3>
             <p>15 вопросов · Проходной балл 85%</p>
         </div>
     </a>
@@ -133,147 +96,13 @@
     <a href="test-carnelia.html" class="card carnelia">
         <div class="logo carnelia">К</div>
         <div class="info">
-            <h3>Тест Карнелия</h3>
+            <h3>Карнелия</h3>
             <p>15 вопросов · Проходной балл 85%</p>
         </div>
     </a>
 
-    <div class="footer">После прохождения результат сохраняется в архиве</div>
+    <div class="footer">После прохождения результат автоматически сохраняется в таблице</div>
 </div>
 
-<div class="modal" id="archiveModal">
-    <div class="modal-content">
-        <span class="close" id="closeArchive">&times;</span>
-        <h2>📂 Архив результатов</h2>
-
-        <div class="password-box" id="passwordBox">
-            <label>🔑 Введите пароль для доступа к архиву</label>
-            <input type="password" id="passwordInput" placeholder="Введите пароль">
-            <br>
-            <button class="btn-unlock" id="unlockBtn">🔓 Открыть архив</button>
-            <div class="error" id="passwordError">❌ Неверный пароль! Попробуйте снова.</div>
-        </div>
-
-        <div id="archiveContent" style="display:none;">
-            <div style="text-align:right; margin-bottom:12px;">
-                <button class="btn-refresh" id="refreshArchiveBtn">🔄 Обновить</button>
-            </div>
-            <div id="loadingArchive" class="loading">⏳ Загрузка данных...</div>
-            <table class="archive-table" id="archiveTable" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>👤 Сотрудник</th>
-                        <th>📋 Тест</th>
-                        <th>📊 Результат</th>
-                        <th>🏷️ Статус</th>
-                        <th>📅 Дата</th>
-                    </tr>
-                </thead>
-                <tbody id="archiveList"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script>
-// ===== НАСТРОЙКА =====
-const ARCHIVE_PASSWORD = '2026'; // СМЕНИТЕ НА СВОЙ!
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzIL0tzSh6CNGBJnFv5YZI7fVUDiPLzjPrSwblQp0OMgsKOAQ-HjV3BubeJJw87TTq3Hg/exec'; // ЗАМЕНИТЕ НА СВОЙ!
-
-// ===== ЗАГРУЗКА ДАННЫХ ИЗ GOOGLE SHEETS =====
-async function loadArchiveFromGoogle() {
-    const loading = document.getElementById('loadingArchive');
-    const table = document.getElementById('archiveTable');
-    const list = document.getElementById('archiveList');
-
-    loading.style.display = 'block';
-    table.style.display = 'none';
-
-    try {
-        // Пытаемся получить данные через Google Sheets API (публичный доступ)
-        // Используем простой GET запрос к веб-приложению
-        const response = await fetch(GOOGLE_SHEETS_URL + '?action=get');
-        if (!response.ok) throw new Error('Ошибка загрузки');
-
-        const data = await response.json();
-        loading.style.display = 'none';
-
-        if (!data || data.length === 0) {
-            list.innerHTML = '<tr><td colspan="5" class="archive-empty">📭 Пока нет результатов</td></tr>';
-            table.style.display = 'table';
-            return;
-        }
-
-        let html = '';
-        data.forEach(r => {
-            const statusClass = r.status === 'Сдан' ? 'badge-pass' : 'badge-fail';
-            const statusIcon = r.status === 'Сдан' ? '✅' : '❌';
-            const testClass = r.test === 'OZON' ? 'ozon' :
-                             r.test === 'Wildberries' ? 'wb' :
-                             r.test === 'Яндекс Маркет' ? 'yandex' : 'carnelia';
-
-            html += `<tr>
-                <td><strong>${r.fio}</strong></td>
-                <td><span class="test-badge ${testClass}">${r.test}</span></td>
-                <td>${r.result}</td>
-                <td class="${statusClass}">${statusIcon} ${r.status}</td>
-                <td style="font-size:12px; color:#7a8a9a;">${r.date}</td>
-            </tr>`;
-        });
-
-        list.innerHTML = html;
-        table.style.display = 'table';
-
-    } catch(error) {
-        loading.style.display = 'none';
-        list.innerHTML = `<tr><td colspan="5" class="archive-empty">❌ Ошибка загрузки: ${error.message}</td></tr>`;
-        table.style.display = 'table';
-    }
-}
-
-// ===== ОТКРЫТИЕ МОДАЛЬНОГО ОКНА =====
-document.getElementById('archiveBtn').addEventListener('click', function() {
-    document.getElementById('passwordBox').style.display = 'block';
-    document.getElementById('archiveContent').style.display = 'none';
-    document.getElementById('passwordInput').value = '';
-    document.getElementById('passwordError').style.display = 'none';
-    document.getElementById('archiveModal').style.display = 'flex';
-});
-
-// ===== ПРОВЕРКА ПАРОЛЯ =====
-document.getElementById('unlockBtn').addEventListener('click', function() {
-    const input = document.getElementById('passwordInput').value;
-    if (input === ARCHIVE_PASSWORD) {
-        document.getElementById('passwordBox').style.display = 'none';
-        document.getElementById('archiveContent').style.display = 'block';
-        loadArchiveFromGoogle();
-        document.getElementById('passwordError').style.display = 'none';
-    } else {
-        document.getElementById('passwordError').style.display = 'block';
-    }
-});
-
-// ===== ENTER ДЛЯ ПАРОЛЯ =====
-document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        document.getElementById('unlockBtn').click();
-    }
-});
-
-// ===== ОБНОВЛЕНИЕ АРХИВА =====
-document.getElementById('refreshArchiveBtn').addEventListener('click', function() {
-    loadArchiveFromGoogle();
-});
-
-// ===== ЗАКРЫТИЕ ОКНА =====
-document.getElementById('closeArchive').addEventListener('click', function() {
-    document.getElementById('archiveModal').style.display = 'none';
-});
-window.addEventListener('click', function(e) {
-    if (e.target === document.getElementById('archiveModal')) {
-        document.getElementById('archiveModal').style.display = 'none';
-    }
-});
-</script>
 </body>
 </html>
