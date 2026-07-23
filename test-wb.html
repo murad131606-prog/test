@@ -38,12 +38,16 @@
         .feedback.correct { color: #28a745; }
         .feedback.wrong { color: #dc3545; }
         .result-block { margin-top: 25px; padding: 25px; background: #f0e6f8; border-radius: 20px; text-align: center; display: none; }
+        .fio-display { font-size: 20px; font-weight: 700; color: #1a2a3a; margin-bottom: 10px; padding: 8px 16px; background: #f8f9fc; border-radius: 10px; border: 2px solid #e9edf2; display: inline-block; }
         .result-block .score { font-size: 34px; font-weight: 900; color: #7b2fbe; }
         .result-block .detail { font-size: 16px; margin-top: 5px; font-weight: 600; }
         .result-block .pass-status { font-size: 22px; font-weight: 700; margin-top: 8px; padding: 10px; border-radius: 12px; }
         .result-block .pass-status.pass { color: #28a745; background: #d4edda; }
         .result-block .pass-status.fail { color: #dc3545; background: #f8d7da; }
         .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 14px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #7b2fbe; font-weight: 500; }
+        .result-block .send-status { font-size: 14px; margin-top: 8px; padding: 8px; border-radius: 8px; font-weight: 600; display: none; }
+        .result-block .send-status.success { color: #28a745; background: #d4edda; display: block; }
+        .result-block .send-status.error { color: #dc3545; background: #f8d7da; display: block; }
         .result-block .screenshot-note { margin-top: 14px; padding: 14px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; font-size: 16px; font-weight: 700; color: #856404; }
         .result-block .screenshot-note span { font-size: 28px; }
         .btn { background: linear-gradient(135deg, #7b2fbe, #9c27b0); color: #fff; border: none; padding: 14px 25px; font-size: 17px; font-weight: 700; border-radius: 40px; cursor: pointer; transition: all 0.3s; margin-top: 10px; width: 100%; font-family: 'Montserrat', sans-serif; }
@@ -79,10 +83,12 @@
     <div id="questions"></div>
 
     <div class="result-block" id="resultBlock">
+        <div class="fio-display" id="fioDisplay"></div>
         <div class="score" id="scoreDisplay">0 / 23</div>
         <div class="detail" id="detailDisplay"></div>
         <div class="pass-status" id="passStatus"></div>
         <div class="motivation" id="motivationText"></div>
+        <div class="send-status" id="sendStatus"></div>
         <div class="screenshot-note" id="screenshotNote">
             <span>📸</span> Сделайте скриншот и отправьте руководителю<br>для подтверждения прохождения теста
         </div>
@@ -95,7 +101,7 @@
 
 <script>
 (function() {
-    const GOOGLE_SHEETS_URL = 'ВАШ_URL_GOOGLE_SHEETS';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwUJXlKRA4RNbWxd_b7RW9zeYTK1LvvMrJ-Omw1TrdH1AwcWvmJdj27dzzaLMDRMoTa6A/exec';
 
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
@@ -105,12 +111,28 @@
             percent: pct,
             status: status
         };
+        console.log('📤 Отправка данных в Google Sheets:', data);
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
-            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        }).catch(err => console.log('Ошибка отправки:', err));
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('✅ Ответ от сервера:', result);
+            if (result.success) {
+                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
+                document.getElementById('sendStatus').className = 'send-status success';
+            } else {
+                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
+                document.getElementById('sendStatus').className = 'send-status error';
+            }
+        })
+        .catch(error => {
+            console.error('❌ Ошибка отправки:', error);
+            document.getElementById('sendStatus').textContent = '❌ Ошибка отправки. Проверьте интернет.';
+            document.getElementById('sendStatus').className = 'send-status error';
+        });
     }
 
     const rawQuestions = [
@@ -224,6 +246,11 @@
         if (!fio) { errorEl.style.display = 'block'; return; }
         errorEl.style.display = 'none';
 
+        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        document.getElementById('sendStatus').className = 'send-status';
+        document.getElementById('sendStatus').textContent = '⏳ Отправка результата...';
+        document.getElementById('sendStatus').style.display = 'block';
+
         let correct = 0;
         const total = questions.length;
         questions.forEach((q, idx) => {
@@ -293,6 +320,9 @@
         document.getElementById('resultBlock').style.display = 'none';
         document.getElementById('checkBtn').disabled = false;
         document.getElementById('userError').style.display = 'none';
+        document.getElementById('sendStatus').className = 'send-status';
+        document.getElementById('sendStatus').textContent = '';
+        document.getElementById('sendStatus').style.display = 'none';
         updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
