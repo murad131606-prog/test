@@ -101,8 +101,10 @@
 
 <script>
 (function() {
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxAS7XW-QNTUaeM5CH1zIosjazWgtv2K5cixdxXLQBOLloehGVEXQUMQi9odaHmYG8fxg/exec';
+    // ===== НАСТРОЙКА С ВАШИМ URL =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -114,19 +116,14 @@
         console.log('📤 Отправка данных в Google Sheets:', data);
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log('✅ Ответ от сервера:', result);
-            if (result.success) {
-                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
-                document.getElementById('sendStatus').className = 'send-status success';
-            } else {
-                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
-                document.getElementById('sendStatus').className = 'send-status error';
-            }
+        .then(response => {
+            console.log('✅ Запрос отправлен (no-cors)');
+            document.getElementById('sendStatus').textContent = '✅ Результат отправлен в таблицу!';
+            document.getElementById('sendStatus').className = 'send-status success';
         })
         .catch(error => {
             console.error('❌ Ошибка отправки:', error);
@@ -135,6 +132,7 @@
         });
     }
 
+    // ===== ВОПРОСЫ (WB) =====
     const rawQuestions = [
         {q:'Что необходимо сделать при выдаче заказа курьеру, если у товара обнаружен брак?', opts:['Отказать курьеру в выдаче заказа и отправить товар на склад','Выдать заказ курьеру, предварительно показав дефект на камеру через терминал','Отменить выдачу и сразу оформить возврат товара','Завернуть товар в дополнительную упаковку и выдать курьеру без отметки'], ans:1},
         {q:'Какой алгоритм действий при приемке товаров поставщика в десктоп-приложении?', opts:['Перейти в раздел «Выдача», отсканировать QR-код поставщика, выдать товары','Перейти в раздел «Приемка», отсканировать стикеры товаров, товарам присвоится ячейка','Перейти в раздел «Возврат», создать коробку и положить туда товары','Отсканировать QR-код поставщика и передать товары курьеру'], ans:1},
@@ -161,6 +159,7 @@
         {q:'Кейс 3. В конце рабочего дня вы обнаруживаете, что в возвратной коробке лежит сейф-пакет с двумя стикерами: штатным и посторонним. Как исправить ситуацию?', opts:['Оставить как есть, курьер разберется','Снять посторонний стикер, оставив только штатный ШК доставки','Переклеить оба стикера на новое место','Убрать сейф-пакет из коробки и отложить в сторону'], ans:1}
     ];
 
+    // ===== ПЕРЕМЕШИВАНИЕ =====
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -181,6 +180,7 @@
     const passThreshold = 20;
     const STORAGE_KEY = 'wb_test_results';
 
+    // ===== МОТИВАЦИЯ =====
     const motivation = {};
     for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
     for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
@@ -206,6 +206,7 @@
         sendToGoogleSheets(fio, 'Wildberries', correct, total, pct, status);
     }
 
+    // ===== РЕНДЕРИНГ =====
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
