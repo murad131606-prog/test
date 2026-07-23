@@ -38,12 +38,16 @@
         .feedback.correct { color: #28a745; }
         .feedback.wrong { color: #dc3545; }
         .result-block { margin-top: 25px; padding: 25px; background: #e9f0fa; border-radius: 20px; text-align: center; display: none; }
+        .fio-display { font-size: 20px; font-weight: 700; color: #1a2a3a; margin-bottom: 10px; padding: 8px 16px; background: #f8f9fc; border-radius: 10px; border: 2px solid #e9edf2; display: inline-block; }
         .result-block .score { font-size: 34px; font-weight: 900; color: #005b9e; }
         .result-block .detail { font-size: 16px; margin-top: 5px; font-weight: 600; }
         .result-block .pass-status { font-size: 22px; font-weight: 700; margin-top: 8px; padding: 10px; border-radius: 12px; }
         .result-block .pass-status.pass { color: #28a745; background: #d4edda; }
         .result-block .pass-status.fail { color: #dc3545; background: #f8d7da; }
         .result-block .motivation { font-size: 17px; margin-top: 10px; padding: 14px; background: #fff; border-radius: 12px; font-style: italic; color: #1a2a3a; border: 2px dashed #005b9e; font-weight: 500; }
+        .result-block .send-status { font-size: 14px; margin-top: 8px; padding: 8px; border-radius: 8px; font-weight: 600; display: none; }
+        .result-block .send-status.success { color: #28a745; background: #d4edda; display: block; }
+        .result-block .send-status.error { color: #dc3545; background: #f8d7da; display: block; }
         .result-block .screenshot-note { margin-top: 14px; padding: 14px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; font-size: 16px; font-weight: 700; color: #856404; }
         .result-block .screenshot-note span { font-size: 28px; }
         .btn { background: linear-gradient(135deg, #005b9e, #0077cc); color: #fff; border: none; padding: 14px 25px; font-size: 17px; font-weight: 700; border-radius: 40px; cursor: pointer; transition: all 0.3s; margin-top: 10px; width: 100%; font-family: 'Montserrat', sans-serif; }
@@ -79,10 +83,12 @@
     <div id="questions"></div>
 
     <div class="result-block" id="resultBlock">
+        <div class="fio-display" id="fioDisplay"></div>
         <div class="score" id="scoreDisplay">0 / 20</div>
         <div class="detail" id="detailDisplay"></div>
         <div class="pass-status" id="passStatus"></div>
         <div class="motivation" id="motivationText"></div>
+        <div class="send-status" id="sendStatus"></div>
         <div class="screenshot-note" id="screenshotNote">
             <span>📸</span> Сделайте скриншот и отправьте руководителю<br>для подтверждения прохождения теста
         </div>
@@ -95,8 +101,10 @@
 
 <script>
 (function() {
-    const GOOGLE_SHEETS_URL = 'ВАШ_URL_GOOGLE_SHEETS';
+    // ===== НАСТРОЙКА =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwUJXlKRA4RNbWxd_b7RW9zeYTK1LvvMrJ-Omw1TrdH1AwcWvmJdj27dzzaLMDRMoTa6A/exec'; // ЗАМЕНИТЕ НА СВОЙ!
 
+    // ===== ОТПРАВКА В GOOGLE SHEETS (С ОБРАБОТКОЙ ОШИБОК) =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -105,14 +113,33 @@
             percent: pct,
             status: status
         };
+
+        console.log('📤 Отправка данных в Google Sheets:', data);
+
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
-            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        }).catch(err => console.log('Ошибка отправки:', err));
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('✅ Ответ от сервера:', result);
+            if (result.success) {
+                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
+                document.getElementById('sendStatus').className = 'send-status success';
+            } else {
+                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
+                document.getElementById('sendStatus').className = 'send-status error';
+            }
+        })
+        .catch(error => {
+            console.error('❌ Ошибка отправки:', error);
+            document.getElementById('sendStatus').textContent = '❌ Ошибка отправки. Проверьте интернет.';
+            document.getElementById('sendStatus').className = 'send-status error';
+        });
     }
 
+    // ===== ВОПРОСЫ =====
     const rawQuestions = [
         {q:'В течение какого времени необходимо принять перевозку и все постинги, когда приехал курьер?', opts:['В течение 15 минут с момента прибытия','До конца текущего рабочего дня','В течение 2 часов','До конца следующего рабочего дня'], ans:0},
         {q:'Какой правильный алгоритм добавления возвратов?', opts:['Принять и физически добавить в коробку','Отсканировать один раз и добавить в коробку','Выбрать направление «Прямой» или «Возвратный поток», отсканировать товар, если требуется переупаковка — переупаковать и наклеить стикер, отсканировать и добавить системно и физически в коробку','Отдать физически курьеру'], ans:2},
@@ -133,9 +160,10 @@
         {q:'Сколько раз за день можно брать технический перерыв?', opts:['Каждый час по 15 минут, указывая перерыв в «Турбо ПВЗ»; нельзя в первом часу рабочего дня и в конце рабочего дня','В любое время, любой промежуток','Два раза в день','В конце и в начале смены'], ans:0},
         {q:'Каков алгоритм выдачи товара клиенту?', opts:['Клиент показывает товар, и вручную выдать ему','Отсканировать штрихкод из личного кабинета и без сканирования товара выдать','Отсканировать во вкладке «Выдача заказов» штрихкод из личного кабинета, отсканировать товар из ячейки, отметить выдачу и провести оплату','Отсканировать штрихкод и отсканировать товар, без проведения оплаты выдать'], ans:2},
         {q:'Можно ли принимать поставку на другом ПВЗ или выдавать товар (например, Wildberries)?', opts:['Можно только приемку','Категорически нельзя ни приемку, ни выдачу заказов','Можно, если отсканировать штрихкод, но выдать в месте, где находится ПВЗ','Можно только выдачу'], ans:1},
-        {q:'В течение какого времени нужно принять приемку?', opts:['В течение 2 часов','В течение рабочей смены','В течение 24 часов','Оставить на следующую смену'], ans:0}
+        {q:'За сколько времени нужно принять приемку?', opts:['В течение 2 часов','В течение рабочей смены','В течение 24 часов','Оставить на следующую смену'], ans:0}
     ];
 
+    // ===== ПЕРЕМЕШИВАНИЕ =====
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -156,6 +184,7 @@
     const passThreshold = 17;
     const STORAGE_KEY = 'ozon_test_results';
 
+    // ===== МОТИВАЦИЯ =====
     const motivation = {};
     for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
     for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
@@ -170,6 +199,7 @@
         return motivation[key] || (p < 85 ? '📖 Рекомендуем повторить регламенты. Повторите материал.' : '🔥 Отличный результат! Так держать!');
     }
 
+    // ===== LOCALSTORAGE =====
     function getResults() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
     }
@@ -181,6 +211,7 @@
         sendToGoogleSheets(fio, 'OZON', correct, total, pct, status);
     }
 
+    // ===== РЕНДЕРИНГ =====
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
@@ -198,6 +229,7 @@
     });
     container.innerHTML = html;
 
+    // ===== ПРОГРЕСС =====
     function updateProgress() {
         const total = questions.length;
         let answered = 0;
@@ -215,11 +247,18 @@
     });
     updateProgress();
 
+    // ===== ПРОВЕРКА =====
     document.getElementById('checkBtn').addEventListener('click', function() {
         const fio = document.getElementById('fio').value.trim();
         const errorEl = document.getElementById('userError');
         if (!fio) { errorEl.style.display = 'block'; return; }
         errorEl.style.display = 'none';
+
+        // === ПОКАЗЫВАЕМ ФИО ===
+        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        document.getElementById('sendStatus').className = 'send-status';
+        document.getElementById('sendStatus').textContent = '⏳ Отправка результата...';
+        document.getElementById('sendStatus').style.display = 'block';
 
         let correct = 0;
         const total = questions.length;
@@ -274,11 +313,13 @@
         motEl.className = pct < 85 ? 'motivation strict' : 'motivation';
         document.getElementById('checkBtn').disabled = true;
 
+        // === СОХРАНЯЕМ И ОТПРАВЛЯЕМ ===
         saveResult(fio, correct, total, pct, status);
 
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
+    // ===== СБРОС =====
     document.getElementById('resetBtn').addEventListener('click', function() {
         document.querySelectorAll('input[type="radio"]').forEach(el => {
             el.checked = false;
@@ -290,6 +331,9 @@
         document.getElementById('resultBlock').style.display = 'none';
         document.getElementById('checkBtn').disabled = false;
         document.getElementById('userError').style.display = 'none';
+        document.getElementById('sendStatus').className = 'send-status';
+        document.getElementById('sendStatus').textContent = '';
+        document.getElementById('sendStatus').style.display = 'none';
         updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
