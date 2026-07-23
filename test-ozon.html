@@ -102,9 +102,9 @@
 <script>
 (function() {
     // ===== НАСТРОЙКА =====
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxAS7XW-QNTUaeM5CH1zIosjazWgtv2K5cixdxXLQBOLloehGVEXQUMQi9odaHmYG8fxg/exec'; // ЗАМЕНИТЕ НА СВОЙ!
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzIuAgsqiszLFt7KCOT--yhL4f2bhVBRMan7jUo2xsMAOEf0fO9zPaN6MYO-U1UOLN3qw/exec';
 
-    // ===== ОТПРАВКА В GOOGLE SHEETS (С ОБРАБОТКОЙ ОШИБОК) =====
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -254,7 +254,6 @@
         if (!fio) { errorEl.style.display = 'block'; return; }
         errorEl.style.display = 'none';
 
-        // === ПОКАЗЫВАЕМ ФИО ===
         document.getElementById('fioDisplay').textContent = '👤 ' + fio;
         document.getElementById('sendStatus').className = 'send-status';
         document.getElementById('sendStatus').textContent = '⏳ Отправка результата...';
@@ -313,7 +312,6 @@
         motEl.className = pct < 85 ? 'motivation strict' : 'motivation';
         document.getElementById('checkBtn').disabled = true;
 
-        // === СОХРАНЯЕМ И ОТПРАВЛЯЕМ ===
         saveResult(fio, correct, total, pct, status);
 
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
