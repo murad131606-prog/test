@@ -650,6 +650,9 @@
 
 <script>
 (function() {
+    // ===== НОВАЯ ССЫЛКА НА ТАБЛИЦУ =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxcOKUyGoDix6lCoow8N7z0FZMct2iVTrJ5OsbnVVl4CRwm2I7D0f6XKTjDELvG_US8NA/exec';
+
     const TOTAL_QUESTIONS = 20;
     const TOTAL_MINUTES = TOTAL_QUESTIONS;
     const WARNING_THRESHOLD = 60;
@@ -659,8 +662,6 @@
     let isTestCompleted = false;
     let fio = '';
     let address = '';
-
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
     const welcomeScreen = document.getElementById('welcomeScreen');
     const fioScreen = document.getElementById('fioScreen');
