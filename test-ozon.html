@@ -86,7 +86,6 @@
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* === ПРИВЕТСТВИЕ === */
         .welcome-screen {
             text-align: center;
             padding: 20px 0 10px 0;
@@ -134,15 +133,10 @@
             color: #ffffff;
             margin-top: 4px;
         }
-        .welcome-screen .info-item .value.time {
-            color: #4da6e8;
-        }
-        .welcome-screen .info-item .value.questions {
-            color: #ffc107;
-        }
-        .welcome-screen .info-item .value.pass {
-            color: #28a745;
-        }
+        .welcome-screen .info-item .value.time { color: #4da6e8; }
+        .welcome-screen .info-item .value.questions { color: #ffc107; }
+        .welcome-screen .info-item .value.pass { color: #28a745; }
+
         .btn-start-welcome {
             background: linear-gradient(145deg, #0066cc, #004d99);
             color: #ffffff;
@@ -179,11 +173,8 @@
             color: #ffffff;
             transform: translateY(-2px);
         }
-        .welcome-screen .btn-back {
-            margin-left: 12px;
-        }
+        .welcome-screen .btn-back { margin-left: 12px; }
 
-        /* === ЭКРАН ФИО === */
         .fio-screen {
             text-align: center;
             padding: 20px 0 10px 0;
@@ -225,6 +216,10 @@
             background: rgba(255, 255, 255, 0.06);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
         }
+        .fio-screen .fio-input-group input:first-child {
+            margin-bottom: 12px;
+        }
+
         .btn-start-test {
             background: linear-gradient(145deg, #0066cc, #004d99);
             color: #ffffff;
@@ -248,9 +243,7 @@
             transform: none;
             box-shadow: none;
         }
-        .fio-screen .btn-back {
-            margin-left: 12px;
-        }
+        .fio-screen .btn-back { margin-left: 12px; }
         .fio-screen .error-msg {
             color: #ff6b6b;
             font-size: 13px;
@@ -259,12 +252,8 @@
             font-weight: 500;
         }
 
-        /* === ТЕСТ === */
-        .test-content {
-            display: none;
-        }
+        .test-content { display: none; }
 
-        /* === ТАЙМЕР === */
         .timer-inline {
             display: flex;
             align-items: center;
@@ -276,9 +265,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .timer-inline .timer-icon {
-            font-size: 20px;
-        }
+        .timer-inline .timer-icon { font-size: 20px; }
         .timer-inline .timer-text {
             font-size: 22px;
             font-weight: 600;
@@ -298,7 +285,6 @@
             50% { opacity: 0.4; }
         }
 
-        /* === ПРОГРЕСС === */
         .progress-container {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 20px;
@@ -322,7 +308,6 @@
             font-weight: 400;
         }
 
-        /* === ВОПРОСЫ === */
         .question {
             background: rgba(255, 255, 255, 0.03);
             padding: 18px 22px;
@@ -362,9 +347,7 @@
             font-weight: 400;
             color: rgba(255, 255, 255, 0.6);
         }
-        .options label:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
+        .options label:hover { background: rgba(255, 255, 255, 0.04); }
         .options input[type="radio"] {
             margin-right: 12px;
             transform: scale(1.1);
@@ -373,9 +356,7 @@
             top: 7px;
             accent-color: #0066cc;
         }
-        .options input[type="radio"]:disabled {
-            cursor: not-allowed;
-        }
+        .options input[type="radio"]:disabled { cursor: not-allowed; }
         .options label.correct-answer {
             background: rgba(40, 167, 69, 0.12) !important;
             border-radius: 8px;
@@ -391,14 +372,9 @@
             font-size: 13px;
             margin-top: 6px;
         }
-        .feedback.correct {
-            color: #28a745;
-        }
-        .feedback.wrong {
-            color: #dc3545;
-        }
+        .feedback.correct { color: #28a745; }
+        .feedback.wrong { color: #dc3545; }
 
-        /* === РЕЗУЛЬТАТ === */
         .result-block {
             margin-top: 28px;
             padding: 28px;
@@ -412,12 +388,18 @@
             font-size: 18px;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
             padding: 8px 16px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.04);
             display: inline-block;
+        }
+        .result-block .address-display {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+            font-weight: 400;
         }
         .result-block .score {
             font-size: 36px;
@@ -490,11 +472,8 @@
             font-weight: 500;
             color: #ffc107;
         }
-        .result-block .screenshot-note span {
-            font-size: 24px;
-        }
+        .result-block .screenshot-note span { font-size: 24px; }
 
-        /* === КНОПКИ === */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -597,7 +576,6 @@
         <span class="badge">Тестирование</span>
     </div>
 
-    <!-- ===== ЭКРАН ПРИВЕТСТВИЯ ===== -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-icon">📋</div>
         <h2>Добро пожаловать!</h2>
@@ -622,21 +600,20 @@
         </div>
     </div>
 
-    <!-- ===== ЭКРАН ФИО ===== -->
     <div class="fio-screen" id="fioScreen">
         <h2>✍️ Введите ваши данные</h2>
-        <p>Пожалуйста, укажите ваши ФИО для идентификации</p>
+        <p>Пожалуйста, укажите ваши ФИО и адрес ПВЗ для идентификации</p>
         <div class="fio-input-group">
             <input type="text" id="fioInput" placeholder="Иванов Иван Иванович">
+            <input type="text" id="addressInput" placeholder="Адрес ПВЗ (например, г. Москва, ул. Ленина, д. 1)">
         </div>
-        <div class="error-msg" id="fioError">⚠️ Пожалуйста, введите ваши ФИО</div>
+        <div class="error-msg" id="fioError">⚠️ Пожалуйста, заполните все поля</div>
         <div>
             <button class="btn-start-test" id="btnStartTest">🚀 Начать тест</button>
             <button class="btn-back" id="btnFioBack">← Назад</button>
         </div>
     </div>
 
-    <!-- ===== СОДЕРЖИМОЕ ТЕСТА ===== -->
     <div class="test-content" id="testContent">
         <div class="timer-inline">
             <span class="timer-icon">⏱️</span>
@@ -650,6 +627,7 @@
 
         <div class="result-block" id="resultBlock">
             <div class="fio-display" id="fioDisplay"></div>
+            <div class="address-display" id="addressDisplay"></div>
             <div class="score" id="scoreDisplay">0 / 20</div>
             <div class="detail" id="detailDisplay"></div>
             <div class="time-spent" id="timeSpent"></div>
@@ -672,7 +650,6 @@
 
 <script>
 (function() {
-    // ===== НАСТРОЙКА =====
     const TOTAL_QUESTIONS = 20;
     const TOTAL_MINUTES = TOTAL_QUESTIONS;
     const WARNING_THRESHOLD = 60;
@@ -681,37 +658,35 @@
     let timerInterval = null;
     let isTestCompleted = false;
     let fio = '';
+    let address = '';
 
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
-    // ===== ЭКРАНЫ =====
     const welcomeScreen = document.getElementById('welcomeScreen');
     const fioScreen = document.getElementById('fioScreen');
     const testContent = document.getElementById('testContent');
     const fioInput = document.getElementById('fioInput');
+    const addressInput = document.getElementById('addressInput');
     const fioError = document.getElementById('fioError');
 
-    // ===== КНОПКА НАЗАД С ПРИВЕТСТВИЯ =====
     document.getElementById('btnWelcomeBack').addEventListener('click', function() {
         window.location.href = 'index.html';
     });
 
-    // ===== КНОПКА НАЗАД С ЭКРАНА ФИО =====
     document.getElementById('btnFioBack').addEventListener('click', function() {
         welcomeScreen.style.display = 'block';
         fioScreen.style.display = 'none';
     });
 
-    // ===== ПЕРЕХОД НА ЭКРАН ФИО =====
     document.getElementById('btnWelcomeNext').addEventListener('click', function() {
         welcomeScreen.style.display = 'none';
         fioScreen.style.display = 'block';
     });
 
-    // ===== ЗАПУСК ТЕСТА =====
     document.getElementById('btnStartTest').addEventListener('click', function() {
         fio = fioInput.value.trim();
-        if (!fio) {
+        address = addressInput.value.trim();
+        if (!fio || !address) {
             fioError.style.display = 'block';
             return;
         }
@@ -719,20 +694,25 @@
         fioScreen.style.display = 'none';
         testContent.style.display = 'block';
         document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        document.getElementById('addressDisplay').textContent = '📍 ' + address;
         startTimer();
     });
 
-    // ===== ENTER ДЛЯ ЗАПУСКА =====
     fioInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             document.getElementById('btnStartTest').click();
         }
     });
+    addressInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('btnStartTest').click();
+        }
+    });
 
-    // ===== ОТПРАВКА В GOOGLE SHEETS =====
-    function sendToGoogleSheets(fio, testName, correct, total, pct, status, timeSpent) {
+    function sendToGoogleSheets(fio, address, testName, correct, total, pct, status, timeSpent) {
         const data = {
             fio: fio,
+            address: address,
             test: testName,
             result: correct + ' из ' + total,
             percent: pct,
@@ -758,13 +738,11 @@
         });
     }
 
-    // ===== ТАЙМЕР =====
     function updateTimerDisplay() {
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
         const display = document.getElementById('timerDisplay');
         display.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-
         if (timeLeft <= WARNING_THRESHOLD) {
             display.classList.add('warning');
         } else {
@@ -777,7 +755,6 @@
         timerInterval = setInterval(function() {
             timeLeft--;
             updateTimerDisplay();
-
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 timerInterval = null;
@@ -840,6 +817,7 @@
         const rb = document.getElementById('resultBlock');
         rb.style.display = 'block';
         document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        document.getElementById('addressDisplay').textContent = '📍 ' + address;
         document.getElementById('scoreDisplay').textContent = correct+' / '+total;
         const pct = Math.round((correct/total)*100);
         document.getElementById('detailDisplay').textContent = pct+'%';
@@ -861,8 +839,7 @@
         document.getElementById('checkBtn').disabled = true;
 
         const timeSpent = getTimeSpent();
-        sendToGoogleSheets(fio, 'OZON', correct, total, pct, status, timeSpent);
-
+        sendToGoogleSheets(fio, address, 'OZON', correct, total, pct, status, timeSpent);
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
@@ -928,15 +905,14 @@
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
     }
 
-    function saveResult(fio, correct, total, pct, status) {
+    function saveResult(fio, address, correct, total, pct, status) {
         const results = getResults();
-        results[fio] = { fio, correct, total, pct, status, date: new Date().toLocaleString('ru-RU') };
+        results[fio + '|' + address] = { fio, address, correct, total, pct, status, date: new Date().toLocaleString('ru-RU') };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
         const timeSpent = getTimeSpent();
-        sendToGoogleSheets(fio, 'OZON', correct, total, pct, status, timeSpent);
+        sendToGoogleSheets(fio, address, 'OZON', correct, total, pct, status, timeSpent);
     }
 
-    // ===== РЕНДЕРИНГ =====
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
@@ -971,7 +947,6 @@
     });
     updateProgress();
 
-    // ===== ПРОВЕРКА =====
     document.getElementById('checkBtn').addEventListener('click', function() {
         if (isTestCompleted) return;
 
@@ -1012,6 +987,8 @@
 
         const rb = document.getElementById('resultBlock');
         rb.style.display = 'block';
+        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        document.getElementById('addressDisplay').textContent = '📍 ' + address;
         document.getElementById('scoreDisplay').textContent = correct+' / '+total;
         const pct = Math.round((correct/total)*100);
         document.getElementById('detailDisplay').textContent = pct+'%';
@@ -1038,12 +1015,10 @@
             timerInterval = null;
         }
 
-        saveResult(fio, correct, total, pct, status);
-
+        saveResult(fio, address, correct, total, pct, status);
         rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    // ===== СБРОС =====
     document.getElementById('resetBtn').addEventListener('click', function() {
         document.querySelectorAll('input[type="radio"]').forEach(el => {
             el.checked = false;
@@ -1065,7 +1040,6 @@
         timeLeft = TOTAL_MINUTES * 60;
         isTestCompleted = false;
         updateTimerDisplay();
-
         updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
