@@ -108,10 +108,10 @@
         }
         .welcome-screen .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px;
             margin-bottom: 28px;
-            max-width: 600px;
+            max-width: 550px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -232,43 +232,12 @@
             font-weight: 500;
         }
 
-        /* === ТЕСТ (скрыт до старта) === */
+        /* === ТЕСТ === */
         .test-content {
             display: none;
         }
 
-        .subtitle {
-            text-align: center;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.35);
-            margin-bottom: 4px;
-            font-weight: 400;
-        }
-
-        .progress-container {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            height: 6px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #0066cc, #4da6e8);
-            border-radius: 20px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        .progress-text {
-            text-align: right;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.2);
-            margin-top: -14px;
-            margin-bottom: 16px;
-            font-weight: 400;
-        }
-
-        /* === ТАЙМЕР ВНУТРИ ТЕСТА === */
+        /* === ТАЙМЕР === */
         .timer-inline {
             display: flex;
             align-items: center;
@@ -302,6 +271,31 @@
             50% { opacity: 0.4; }
         }
 
+        /* === ПРОГРЕСС === */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            height: 6px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0066cc, #4da6e8);
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            text-align: right;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: -14px;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        /* === ВОПРОСЫ === */
         .question {
             background: rgba(255, 255, 255, 0.03);
             padding: 18px 22px;
@@ -377,6 +371,7 @@
             color: #dc3545;
         }
 
+        /* === РЕЗУЛЬТАТ === */
         .result-block {
             margin-top: 28px;
             padding: 28px;
@@ -406,6 +401,12 @@
             font-size: 16px;
             margin-top: 4px;
             color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+        .result-block .time-spent {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 6px;
             font-weight: 400;
         }
         .result-block .pass-status {
@@ -466,6 +467,7 @@
             font-size: 24px;
         }
 
+        /* === КНОПКИ === */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -612,6 +614,7 @@
             <div class="fio-display" id="fioDisplay"></div>
             <div class="score" id="scoreDisplay">0 / 20</div>
             <div class="detail" id="detailDisplay"></div>
+            <div class="time-spent" id="timeSpent"></div>
             <div class="pass-status" id="passStatus"></div>
             <div class="motivation" id="motivationText"></div>
             <div class="send-status" id="sendStatus"></div>
@@ -633,8 +636,8 @@
 (function() {
     // ===== НАСТРОЙКА =====
     const TOTAL_QUESTIONS = 20;
-    const TOTAL_MINUTES = TOTAL_QUESTIONS;
-    const WARNING_THRESHOLD = 60;
+    const TOTAL_MINUTES = TOTAL_QUESTIONS; // 1 минута на вопрос
+    const WARNING_THRESHOLD = 60; // 60 секунд — предупреждение
 
     let timeLeft = TOTAL_MINUTES * 60;
     let timerInterval = null;
@@ -787,9 +790,11 @@
 
         const rb = document.getElementById('resultBlock');
         rb.style.display = 'block';
+        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
         document.getElementById('scoreDisplay').textContent = correct+' / '+total;
         const pct = Math.round((correct/total)*100);
         document.getElementById('detailDisplay').textContent = pct+'%';
+        document.getElementById('timeSpent').textContent = '⏱️ Время прохождения: ' + getTimeSpent();
         const ps = document.getElementById('passStatus');
         let status = '';
         if (pct >= 85) {
@@ -961,6 +966,7 @@
         document.getElementById('scoreDisplay').textContent = correct+' / '+total;
         const pct = Math.round((correct/total)*100);
         document.getElementById('detailDisplay').textContent = pct+'%';
+        document.getElementById('timeSpent').textContent = '⏱️ Время прохождения: ' + getTimeSpent();
         const ps = document.getElementById('passStatus');
         let status = '';
         if (pct >= 85) {
