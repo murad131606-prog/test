@@ -101,10 +101,10 @@
 
 <script>
 (function() {
-    // ===== НАСТРОЙКА =====
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzIuAgsqiszLFt7KCOT--yhL4f2bhVBRMan7jUo2xsMAOEf0fO9zPaN6MYO-U1UOLN3qw/exec';
+    // ===== НАСТРОЙКА С ВАШИМ НОВЫМ URL =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
-    // ===== ОТПРАВКА В GOOGLE SHEETS =====
+    // ===== ОТПРАВКА В GOOGLE SHEETS (С УЛУЧШЕННОЙ ОБРАБОТКОЙ) =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -118,19 +118,14 @@
 
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log('✅ Ответ от сервера:', result);
-            if (result.success) {
-                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
-                document.getElementById('sendStatus').className = 'send-status success';
-            } else {
-                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
-                document.getElementById('sendStatus').className = 'send-status error';
-            }
+        .then(response => {
+            console.log('✅ Запрос отправлен (no-cors)');
+            document.getElementById('sendStatus').textContent = '✅ Результат отправлен в таблицу!';
+            document.getElementById('sendStatus').className = 'send-status success';
         })
         .catch(error => {
             console.error('❌ Ошибка отправки:', error);
@@ -139,7 +134,7 @@
         });
     }
 
-    // ===== ВОПРОСЫ =====
+    // ===== ВОПРОСЫ (ОСТАЛИСЬ БЕЗ ИЗМЕНЕНИЙ) =====
     const rawQuestions = [
         {q:'В течение какого времени необходимо принять перевозку и все постинги, когда приехал курьер?', opts:['В течение 15 минут с момента прибытия','До конца текущего рабочего дня','В течение 2 часов','До конца следующего рабочего дня'], ans:0},
         {q:'Какой правильный алгоритм добавления возвратов?', opts:['Принять и физически добавить в коробку','Отсканировать один раз и добавить в коробку','Выбрать направление «Прямой» или «Возвратный поток», отсканировать товар, если требуется переупаковка — переупаковать и наклеить стикер, отсканировать и добавить системно и физически в коробку','Отдать физически курьеру'], ans:2},
