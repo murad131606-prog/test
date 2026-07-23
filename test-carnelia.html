@@ -101,8 +101,10 @@
 
 <script>
 (function() {
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxAS7XW-QNTUaeM5CH1zIosjazWgtv2K5cixdxXLQBOLloehGVEXQUMQi9odaHmYG8fxg/exec';
+    // ===== НАСТРОЙКА С ВАШИМ URL =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -114,19 +116,14 @@
         console.log('📤 Отправка данных в Google Sheets:', data);
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log('✅ Ответ от сервера:', result);
-            if (result.success) {
-                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
-                document.getElementById('sendStatus').className = 'send-status success';
-            } else {
-                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
-                document.getElementById('sendStatus').className = 'send-status error';
-            }
+        .then(response => {
+            console.log('✅ Запрос отправлен (no-cors)');
+            document.getElementById('sendStatus').textContent = '✅ Результат отправлен в таблицу!';
+            document.getElementById('sendStatus').className = 'send-status success';
         })
         .catch(error => {
             console.error('❌ Ошибка отправки:', error);
@@ -135,6 +132,7 @@
         });
     }
 
+    // ===== ВОПРОСЫ (КАРНЕЛИЯ) =====
     const rawQuestions = [
         {q:'Что сотрудник ОБЯЗАН сделать при приеме вещи от клиента?', opts:['Провести полную экспертизу ткани с лупой','Визуально посмотреть на вещь вместе с клиентом','Сразу упаковать вещь, не показывая клиенту','Сфотографировать вещь на телефон'], ans:1},
         {q:'Сколько квитанций нужно оторвать для оформления одного заказа?', opts:['1','2','3','4'], ans:2},
@@ -153,6 +151,7 @@
         {q:'Сколько квитанций нужно оторвать для оформления одного заказа? (повтор)', opts:['1','2','3','4'], ans:2}
     ];
 
+    // ===== ПЕРЕМЕШИВАНИЕ =====
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -173,6 +172,7 @@
     const passThreshold = 13;
     const STORAGE_KEY = 'carnelia_test_results';
 
+    // ===== МОТИВАЦИЯ =====
     const motivation = {};
     for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
     for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
@@ -198,6 +198,7 @@
         sendToGoogleSheets(fio, 'Карнелия', correct, total, pct, status);
     }
 
+    // ===== РЕНДЕРИНГ =====
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
