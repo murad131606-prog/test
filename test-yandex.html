@@ -101,8 +101,10 @@
 
 <script>
 (function() {
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxAS7XW-QNTUaeM5CH1zIosjazWgtv2K5cixdxXLQBOLloehGVEXQUMQi9odaHmYG8fxg/exec';
+    // ===== НАСТРОЙКА С ВАШИМ URL =====
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status) {
         const data = {
             fio: fio,
@@ -114,19 +116,14 @@
         console.log('📤 Отправка данных в Google Sheets:', data);
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log('✅ Ответ от сервера:', result);
-            if (result.success) {
-                document.getElementById('sendStatus').textContent = '✅ Результат сохранён в таблице!';
-                document.getElementById('sendStatus').className = 'send-status success';
-            } else {
-                document.getElementById('sendStatus').textContent = '❌ Ошибка: ' + (result.error || 'неизвестная ошибка');
-                document.getElementById('sendStatus').className = 'send-status error';
-            }
+        .then(response => {
+            console.log('✅ Запрос отправлен (no-cors)');
+            document.getElementById('sendStatus').textContent = '✅ Результат отправлен в таблицу!';
+            document.getElementById('sendStatus').className = 'send-status success';
         })
         .catch(error => {
             console.error('❌ Ошибка отправки:', error);
@@ -135,6 +132,7 @@
         });
     }
 
+    // ===== ВОПРОСЫ (ЯНДЕКС) =====
     const rawQuestions = [
         {q:'Какие товары категорически запрещены к приёму на ПВЗ?', opts:['Товары с истекшим сроком годности и просроченные продукты','Взрывчатые вещества, оружие, наркотики, деньги, живые организмы, скоропортящиеся продукты','Только крупногабаритные товары и тяжёлые грузы','Только драгоценности, антиквариат и предметы искусства'], ans:1},
         {q:'Что нужно сделать при выдаче предоплаченного заказа?', opts:['Отсканировать ШК клиента, проверить ячейку, передать заказ, клиент проверяет под камерами, нажать «Выдать»','Сразу отдать заказ без проверки после сканирования ШК','Попросить клиента расписаться в журнале и отдать заказ','Отправить клиента в поддержку для подтверждения заказа'], ans:0},
@@ -158,6 +156,7 @@
         {q:'Что делать, если при приёмке заказа Авито клиент не может предъявить документ из списка допустимых?', opts:['Отказать в приёме заказа, так как без документа приёмка невозможна','Принять заказ, если клиент называет номер заказа по памяти','Принять заказ и попросить клиента прислать фото документа позже','Отправить клиента в поддержку для подтверждения личности'], ans:0}
     ];
 
+    // ===== ПЕРЕМЕШИВАНИЕ =====
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -178,6 +177,7 @@
     const passThreshold = 17;
     const STORAGE_KEY = 'yandex_test_results';
 
+    // ===== МОТИВАЦИЯ =====
     const motivation = {};
     for(let i=0;i<50;i++) motivation[i] = '🔴 Результат неудовлетворительный. Повторите материал.';
     for(let i=50;i<70;i++) motivation[i] = '🟡 Хороший прогресс, но до зачёта ещё далеко. Повторите материал.';
@@ -203,6 +203,7 @@
         sendToGoogleSheets(fio, 'Яндекс Маркет', correct, total, pct, status);
     }
 
+    // ===== РЕНДЕРИНГ =====
     const container = document.getElementById('questions');
     let html = '';
     questions.forEach((q, idx) => {
