@@ -86,44 +86,155 @@
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* === ТАЙМЕР === */
-        .timer-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .timer-container .timer-icon {
-            font-size: 20px;
-        }
-        .timer-container .timer-text {
-            font-size: 22px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 1px;
-            transition: color 0.5s ease;
-            min-width: 100px;
+        /* === ПРИВЕТСТВИЕ === */
+        .welcome-screen {
             text-align: center;
+            padding: 20px 0 10px 0;
         }
-        .timer-container .timer-text.warning {
-            color: #ff6b6b;
-            animation: pulse 1s ease-in-out infinite;
+        .welcome-screen .welcome-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
         }
-        .timer-container .timer-text .seconds {
-            font-size: 18px;
-            font-weight: 400;
+        .welcome-screen h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .welcome-screen .welcome-sub {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+        }
+        .welcome-screen .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .welcome-screen .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px 12px;
+        }
+        .welcome-screen .info-item .label {
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        .welcome-screen .info-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+        .welcome-screen .info-item .value.time {
+            color: #4da6e8;
+        }
+        .welcome-screen .info-item .value.questions {
+            color: #ffc107;
+        }
+        .welcome-screen .info-item .value.pass {
+            color: #28a745;
+        }
+        .btn-start-welcome {
+            background: linear-gradient(145deg, #0066cc, #004d99);
+            color: #ffffff;
+            border: none;
+            padding: 14px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-start-welcome:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        /* === ЭКРАН ФИО === */
+        .fio-screen {
+            text-align: center;
+            padding: 20px 0 10px 0;
+            display: none;
+        }
+        .fio-screen h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .fio-screen p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+        }
+        .fio-screen .fio-input-group {
+            max-width: 450px;
+            margin: 0 auto 20px auto;
+        }
+        .fio-screen .fio-input-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            transition: 0.3s;
+            text-align: center;
+        }
+        .fio-screen .fio-input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .fio-screen .fio-input-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+        }
+        .btn-start-test {
+            background: linear-gradient(145deg, #0066cc, #004d99);
+            color: #ffffff;
+            border: none;
+            padding: 14px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-start-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3);
+        }
+        .btn-start-test:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .fio-screen .error-msg {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* === ТЕСТ (скрыт до старта) === */
+        .test-content {
+            display: none;
         }
 
         .subtitle {
@@ -132,73 +243,6 @@
             color: rgba(255, 255, 255, 0.35);
             margin-bottom: 4px;
             font-weight: 400;
-        }
-        .pass-info {
-            text-align: center;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.03);
-            padding: 10px 16px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            font-weight: 400;
-        }
-        .pass-info strong {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 600;
-        }
-
-        .user-form {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 16px 20px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .user-form label {
-            font-weight: 500;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            min-width: 36px;
-        }
-        .user-form input {
-            padding: 10px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            font-size: 14px;
-            flex: 1;
-            min-width: 200px;
-            font-family: 'Inter', sans-serif;
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
-            transition: 0.3s;
-        }
-        .user-form input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
-        }
-        .user-form input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
-        }
-        .user-form input:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 13px;
-            margin-top: 4px;
-            display: none;
-            text-align: center;
-            font-weight: 500;
         }
 
         .progress-container {
@@ -222,6 +266,40 @@
             margin-top: -14px;
             margin-bottom: 16px;
             font-weight: 400;
+        }
+
+        /* === ТАЙМЕР ВНУТРИ ТЕСТА === */
+        .timer-inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .timer-inline .timer-icon {
+            font-size: 20px;
+        }
+        .timer-inline .timer-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+            transition: color 0.5s ease;
+            min-width: 100px;
+            text-align: center;
+        }
+        .timer-inline .timer-text.warning {
+            color: #ff6b6b;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .question {
@@ -463,13 +541,14 @@
             .container { padding: 20px 18px; border-radius: 24px; }
             .header { flex-direction: column; align-items: flex-start; gap: 8px; }
             .header h1 { font-size: 20px; }
-            .user-form { flex-direction: column; align-items: stretch; }
-            .user-form input { width: 100%; }
             .btn-group { flex-direction: column; }
             .btn { min-width: unset; }
             .btn-home { flex: 1; }
             .question { padding: 14px 16px; }
-            .timer-container .timer-text { font-size: 18px; min-width: 70px; }
+            .welcome-screen .info-grid { grid-template-columns: 1fr 1fr; }
+            .welcome-screen h2 { font-size: 22px; }
+            .fio-screen h2 { font-size: 20px; }
+            .timer-inline .timer-text { font-size: 18px; min-width: 70px; }
         }
     </style>
 </head>
@@ -483,60 +562,122 @@
         <span class="badge">Тестирование</span>
     </div>
 
-    <!-- === ТАЙМЕР === -->
-    <div class="timer-container">
-        <span class="timer-icon">⏱️</span>
-        <span class="timer-text" id="timerDisplay">20:00</span>
-    </div>
-
-    <div class="subtitle">20 вопросов · 85% для прохождения</div>
-    <div class="pass-info">Для успешного прохождения необходимо набрать <strong>85%</strong></div>
-
-    <div class="user-form" id="userForm">
-        <label>ФИО</label>
-        <input type="text" id="fio" placeholder="Иванов Иван Иванович">
-    </div>
-    <div class="error-msg" id="userError">⚠️ Введите ФИО перед проверкой</div>
-
-    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-    <div class="progress-text" id="progressText">0 из 20</div>
-
-    <div id="questions"></div>
-
-    <div class="result-block" id="resultBlock">
-        <div class="fio-display" id="fioDisplay"></div>
-        <div class="score" id="scoreDisplay">0 / 20</div>
-        <div class="detail" id="detailDisplay"></div>
-        <div class="pass-status" id="passStatus"></div>
-        <div class="motivation" id="motivationText"></div>
-        <div class="send-status" id="sendStatus"></div>
-        <div class="screenshot-note" id="screenshotNote">
-            <span>📸</span> Сделайте скриншот и отправьте руководителю<br>для подтверждения прохождения теста
+    <!-- ===== ЭКРАН ПРИВЕТСТВИЯ ===== -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-icon">📋</div>
+        <h2>Добро пожаловать!</h2>
+        <p class="welcome-sub">Вам предстоит пройти тестирование по регламентам OZON</p>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="label">📊 Вопросов</div>
+                <div class="value questions">20</div>
+            </div>
+            <div class="info-item">
+                <div class="label">⏱️ Время</div>
+                <div class="value time">20 минут</div>
+            </div>
+            <div class="info-item">
+                <div class="label">🎯 Проходной балл</div>
+                <div class="value pass">85%</div>
+            </div>
         </div>
+        <button class="btn-start-welcome" id="btnWelcomeNext">Далее →</button>
     </div>
 
-    <div class="btn-group">
-        <button class="btn btn-primary" id="checkBtn">✅ Проверить ответы</button>
-        <button class="btn btn-secondary" id="resetBtn">🔄 Пройти заново</button>
-        <a href="index.html" class="btn btn-home">🏠 На главную</a>
+    <!-- ===== ЭКРАН ФИО ===== -->
+    <div class="fio-screen" id="fioScreen">
+        <h2>✍️ Введите ваши данные</h2>
+        <p>Пожалуйста, укажите ваши ФИО для идентификации</p>
+        <div class="fio-input-group">
+            <input type="text" id="fioInput" placeholder="Иванов Иван Иванович">
+        </div>
+        <div class="error-msg" id="fioError">⚠️ Пожалуйста, введите ваши ФИО</div>
+        <button class="btn-start-test" id="btnStartTest">🚀 Начать тест</button>
     </div>
-    <div class="footer">При ошибке правильный вариант не показывается</div>
+
+    <!-- ===== СОДЕРЖИМОЕ ТЕСТА ===== -->
+    <div class="test-content" id="testContent">
+        <!-- Таймер внутри теста -->
+        <div class="timer-inline">
+            <span class="timer-icon">⏱️</span>
+            <span class="timer-text" id="timerDisplay">20:00</span>
+        </div>
+
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="progress-text" id="progressText">0 из 20</div>
+
+        <div id="questions"></div>
+
+        <div class="result-block" id="resultBlock">
+            <div class="fio-display" id="fioDisplay"></div>
+            <div class="score" id="scoreDisplay">0 / 20</div>
+            <div class="detail" id="detailDisplay"></div>
+            <div class="pass-status" id="passStatus"></div>
+            <div class="motivation" id="motivationText"></div>
+            <div class="send-status" id="sendStatus"></div>
+            <div class="screenshot-note" id="screenshotNote">
+                <span>📸</span> Сделайте скриншот и отправьте руководителю<br>для подтверждения прохождения теста
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="checkBtn">✅ Проверить ответы</button>
+            <button class="btn btn-secondary" id="resetBtn">🔄 Пройти заново</button>
+            <a href="index.html" class="btn btn-home">🏠 На главную</a>
+        </div>
+        <div class="footer">При ошибке правильный вариант не показывается</div>
+    </div>
 </div>
 
 <script>
 (function() {
-    // ===== КОЛИЧЕСТВО ВОПРОСОВ =====
+    // ===== НАСТРОЙКА =====
     const TOTAL_QUESTIONS = 20;
-    const TOTAL_MINUTES = TOTAL_QUESTIONS; // 1 минута на вопрос
-    const WARNING_THRESHOLD = 60; // 60 секунд — предупреждение
+    const TOTAL_MINUTES = TOTAL_QUESTIONS;
+    const WARNING_THRESHOLD = 60;
 
     let timeLeft = TOTAL_MINUTES * 60;
     let timerInterval = null;
     let isTestCompleted = false;
+    let fio = '';
 
-    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhMhW5eaVjFVWUb1Q9eFyhmXWfty_q4UF3HTFaW7f7OsfLGYiVXVYfHppO-eJXHzhIXg/exec';
 
+    // ===== ЭКРАНЫ =====
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const fioScreen = document.getElementById('fioScreen');
+    const testContent = document.getElementById('testContent');
+    const fioInput = document.getElementById('fioInput');
+    const fioError = document.getElementById('fioError');
+
+    // ===== ПЕРЕХОД НА ЭКРАН ФИО =====
+    document.getElementById('btnWelcomeNext').addEventListener('click', function() {
+        welcomeScreen.style.display = 'none';
+        fioScreen.style.display = 'block';
+    });
+
+    // ===== ЗАПУСК ТЕСТА =====
+    document.getElementById('btnStartTest').addEventListener('click', function() {
+        fio = fioInput.value.trim();
+        if (!fio) {
+            fioError.style.display = 'block';
+            return;
+        }
+        fioError.style.display = 'none';
+        fioScreen.style.display = 'none';
+        testContent.style.display = 'block';
+        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
+        startTimer();
+    });
+
+    // ===== ENTER ДЛЯ ЗАПУСКА =====
+    fioInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('btnStartTest').click();
+        }
+    });
+
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(fio, testName, correct, total, pct, status, timeSpent) {
         const data = {
             fio: fio,
@@ -588,7 +729,6 @@
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 timerInterval = null;
-                // Автоматическое завершение теста
                 if (!isTestCompleted) {
                     autoCompleteTest('⏰ Время вышло!');
                 }
@@ -611,20 +751,9 @@
             clearInterval(timerInterval);
             timerInterval = null;
         }
-        // Блокируем все поля и кнопки
         document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = true);
-        document.getElementById('fio').disabled = true;
         document.getElementById('checkBtn').disabled = true;
 
-        // Проверяем, есть ли ФИО
-        const fio = document.getElementById('fio').value.trim();
-        if (!fio) {
-            document.getElementById('userError').textContent = '⚠️ Время вышло! Введите ФИО и пройдите тест заново.';
-            document.getElementById('userError').style.display = 'block';
-            return;
-        }
-
-        // Собираем результаты
         let correct = 0;
         const total = questions.length;
         questions.forEach((q, idx) => {
@@ -658,7 +787,6 @@
 
         const rb = document.getElementById('resultBlock');
         rb.style.display = 'block';
-        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
         document.getElementById('scoreDisplay').textContent = correct+' / '+total;
         const pct = Math.round((correct/total)*100);
         document.getElementById('detailDisplay').textContent = pct+'%';
@@ -789,21 +917,10 @@
     });
     updateProgress();
 
-    // ===== ПРОВЕРКА (РУЧНАЯ) =====
+    // ===== ПРОВЕРКА =====
     document.getElementById('checkBtn').addEventListener('click', function() {
-        const fio = document.getElementById('fio').value.trim();
-        const errorEl = document.getElementById('userError');
-        if (!fio) { errorEl.style.display = 'block'; return; }
-        errorEl.style.display = 'none';
-
-        // Запускаем таймер, если ещё не запущен
-        if (!timerInterval && !isTestCompleted) {
-            startTimer();
-        }
-
         if (isTestCompleted) return;
 
-        document.getElementById('fioDisplay').textContent = '👤 ' + fio;
         document.getElementById('sendStatus').className = 'send-status';
         document.getElementById('sendStatus').textContent = '⏳ Отправка результата...';
         document.getElementById('sendStatus').style.display = 'inline-block';
@@ -882,14 +999,10 @@
         document.querySelectorAll('.options label').forEach(el => el.classList.remove('correct-answer','wrong-answer'));
         document.getElementById('resultBlock').style.display = 'none';
         document.getElementById('checkBtn').disabled = false;
-        document.getElementById('userError').style.display = 'none';
         document.getElementById('sendStatus').className = 'send-status';
         document.getElementById('sendStatus').textContent = '';
         document.getElementById('sendStatus').style.display = 'none';
-        document.getElementById('fio').disabled = false;
-        document.getElementById('timerDisplay').classList.remove('warning');
 
-        // Сброс таймера
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
@@ -902,7 +1015,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // ===== ОБНОВЛЯЕМ ТАЙМЕР ПРИ СТАРТЕ =====
     updateTimerDisplay();
 })();
 </script>
