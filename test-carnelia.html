@@ -187,6 +187,7 @@
         return motivation[key] || (p < 85 ? '📖 Рекомендуем повторить регламенты. Повторите материал.' : '🔥 Отличный результат! Так держать!');
     }
 
+    // ===== LOCALSTORAGE =====
     function getResults() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
     }
@@ -195,6 +196,7 @@
         const results = getResults();
         results[fio] = { fio, correct, total, pct, status, date: new Date().toLocaleString('ru-RU') };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
+        // ===== ВЫЗОВ ОТПРАВКИ =====
         sendToGoogleSheets(fio, 'Карнелия', correct, total, pct, status);
     }
 
